@@ -47,3 +47,15 @@ app:
     user_e:
       key_prefix: "user:"
       key_ttl: 15
+    package_e:
+      key_prefix: "package:"
+      key_ttl: 15
+    package_l:
+      key_prefix: "available_packages_by_country:"
+      key_ttl: 15
+    user_package_e:
+      key_prefix: "user_package:"
+      key_ttl: 15
+    user_package_l:
+      key_prefix: "user_purchased_package_by_user_id:user_country:"
+      key_ttl: 15
