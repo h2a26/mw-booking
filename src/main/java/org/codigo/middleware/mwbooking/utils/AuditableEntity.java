@@ -3,6 +3,7 @@ package org.codigo.middleware.mwbooking.utils;
 import jakarta.persistence.Column;
 import jakarta.persistence.EntityListeners;
 import jakarta.persistence.MappedSuperclass;
+import jakarta.persistence.Version;
 import lombok.Data;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
@@ -32,4 +33,8 @@ public abstract class AuditableEntity {
     @LastModifiedBy
     @Column(name = "updated_by")
     private String updatedBy;
+
+    @Version
+    @Column(name = "version")
+    private Long version = 0L;
 }

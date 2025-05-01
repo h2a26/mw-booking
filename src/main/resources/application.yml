@@ -26,6 +26,24 @@ spring:
   sql:
     init:
       mode: always
+
 logging:
   level:
     org.springframework.jdbc.datasource.init: DEBUG
+
+app:
+  token:
+    secret: CJxD7RA0InBYKIAyyq0LdgyqUFS4vXNkntiGvnjNe2Nkpzfe1PGdyISMDfMmxtxFc5yE7zBOjLBA/kKdoLEd0Q==
+    issuer: org.mw.mwws
+    expiration:
+      access: 5
+      refresh: 1500
+    role:
+      key: rol
+    type:
+      key: typ
+
+  redis:
+    user_e:
+      key_prefix: "user:"
+      key_ttl: 15

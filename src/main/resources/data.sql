@@ -1,7 +1,7 @@
 -- Inserting Users
-INSERT INTO users (username, email, password, country, is_verified) VALUES
-('john_doe', 'john.doe@example.com', '$2a$10$ugZ7uS9B.sFAK4J0kuw6puAp3q5a5aIG2vc/aMlwNq/JCGSRbZeD6', 'SG',TRUE),
-('jane_smith', 'jane.smith@example.com', '$2a$10$ugZ7uS9B.sFAK4J0kuw6puAp3q5a5aIG2vc/aMlwNq/JCGSRbZeD6', 'MM',FALSE);
+INSERT INTO users (username, email, password, country, is_verified, version) VALUES
+('john_doe', 'john.doe@example.com', '$2a$10$ugZ7uS9B.sFAK4J0kuw6puAp3q5a5aIG2vc/aMlwNq/JCGSRbZeD6', 'SG',TRUE, 0),
+('jane_smith', 'jane.smith@example.com', '$2a$10$ugZ7uS9B.sFAK4J0kuw6puAp3q5a5aIG2vc/aMlwNq/JCGSRbZeD6', 'MM',FALSE, 0);
 
 
 INSERT INTO roles (name) VALUES ('ADMIN');

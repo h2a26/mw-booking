@@ -9,13 +9,13 @@ import org.springframework.stereotype.Service;
 public class MockEmailServiceImpl implements MockEmailService {
     @Override
     public boolean sendMsisdnVerificationEmail(String email, String OTP) {
-        log.info("Verification email sent to {}, follow the link http://localhost:8080/cp/auth/verify-otp with request: VerifyOTPRequest(email={}, OTP={})", email, email, OTP);
+        log.info("Verification email sent to {}, follow the link http://localhost:8080/booking/auth/verify-otp with request: VerifyOTPRequest(email={}, OTP={})", email, email, OTP);
         return true;
     }
 
     @Override
     public boolean sendResetPasswordEmail(String email, String OTP) {
-        log.info("Reset Password email sent to {}, follow the link http://localhost:8080/cp/auth/reset-password-confirm with request: ResetPasswordRequest(email={}, OTP={})", email, email, OTP);
+        log.info("Reset Password email sent to {}, follow the link http://localhost:8080/booking/auth/reset-password-confirm with request: ResetPasswordRequest(email={}, OTP={})", email, email, OTP);
         return true;
     }
 

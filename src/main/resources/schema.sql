@@ -13,6 +13,7 @@ CREATE TABLE IF NOT EXISTS users (
     updated_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,
     created_by VARCHAR(255) DEFAULT 'System',
     updated_by VARCHAR(255) DEFAULT 'System',
+    version BIGINT DEFAULT 0 NOT NULL,
     CONSTRAINT email_unique UNIQUE(email),
 	CONSTRAINT chk_is_verified CHECK (is_verified IN (FALSE, TRUE))
 );
