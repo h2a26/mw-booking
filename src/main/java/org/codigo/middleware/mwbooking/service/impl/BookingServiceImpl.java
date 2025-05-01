@@ -109,7 +109,7 @@ public class BookingServiceImpl implements BookingService {
         }
 
         if (!booking.getUser().equals(user)) {
-            throw new IllegalArgumentException("User can't do someone else booking cancellation process.");
+            throw new IllegalStateException("User can't do someone else booking cancellation process.");
         }
 
         if (booking.isCanceled()) {
@@ -209,14 +209,26 @@ public class BookingServiceImpl implements BookingService {
     }
 
     private void validateSufficientCredits(Class_ classEntity, List<UserPackage> userPackages) {
-        // Validate sufficient credits
-        int totalEligibleBalanceCredits = userPackages.stream()
-                .filter(pkg -> pkg.getPackageEntity().getCountry().equals(classEntity.getCountry()))
-                .filter(pkg -> pkg.getStatus() == PackageStatus.ACTIVE && pkg.getRemainingCredits() > 0)
-                .mapToInt(UserPackage::getRemainingCredits).sum();
 
-        if (totalEligibleBalanceCredits < classEntity.getRequiredCredits()) {
-            throw new InsufficientCreditsException("Not enough credits for booking");
+        String classCountry = classEntity.getCountry();
+        int requiredCredits = classEntity.getRequiredCredits();
+
+        // Filter only active packages for the class's country
+        List<UserPackage> eligiblePackages = userPackages.stream()
+                .filter(pkg -> pkg.getStatus() == PackageStatus.ACTIVE && pkg.getRemainingCredits() > 0)
+                .filter(pkg -> pkg.getPackageEntity().getCountry().equals(classCountry))
+                .toList();
+
+        if (eligiblePackages.isEmpty()) {
+            throw new InvalidPackageCountryException("No active package found for country: " + classCountry);
+        }
+
+        int totalEligibleBalanceCredits = eligiblePackages.stream()
+                .mapToInt(UserPackage::getRemainingCredits)
+                .sum();
+
+        if (totalEligibleBalanceCredits < requiredCredits) {
+            throw new InsufficientCreditsException("Insufficient credits: class ID " + classEntity.getClassId() + " requires " + classEntity.getRequiredCredits() + " credits.");
         }
     }
 }

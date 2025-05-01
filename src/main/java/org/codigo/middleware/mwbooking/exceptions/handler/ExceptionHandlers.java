@@ -3,6 +3,7 @@ package org.codigo.middleware.mwbooking.exceptions.handler;
 import org.codigo.middleware.mwbooking.exceptions.*;
 import org.codigo.middleware.mwbooking.utils.ApiResponse;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.dao.InvalidDataAccessApiUsageException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AccountExpiredException;
@@ -32,8 +33,8 @@ public class ExceptionHandlers {
 
 	@ExceptionHandler
 	@ResponseStatus(code = HttpStatus.FORBIDDEN)
-	public ResponseEntity<ApiResponse<String>> handle(ApiOTPExpirationException e) {
-		return ApiResponse.of(e.getMessage(), HttpStatus.FORBIDDEN);
+	public ResponseEntity<ApiResponse<List<String>>> handle(ApiOTPExpirationException e) {
+		return ApiResponse.of(List.of(e.getMessage()), HttpStatus.FORBIDDEN);
 	}
 
 	@ExceptionHandler
@@ -50,9 +51,34 @@ public class ExceptionHandlers {
 	
 	@ExceptionHandler
 	@ResponseStatus(code = HttpStatus.REQUEST_TIMEOUT)
-	ResponseEntity<ApiResponse<String>> handle(ApiJwtTokenExpirationException e) {
+	ResponseEntity<ApiResponse<List<String>>> handle(ApiJwtTokenExpirationException e) {
 		log.error("Token Expiration Error", e);
-		return ApiResponse.of("Your access token has been expired. Please refresh token again.", HttpStatus.REQUEST_TIMEOUT);
+		return ApiResponse.of(List.of("Your access token has been expired. Please refresh token again."), HttpStatus.REQUEST_TIMEOUT);
+	}
+
+
+	@ExceptionHandler
+	@ResponseStatus(code = HttpStatus.NOT_FOUND)
+	public ResponseEntity<ApiResponse<List<String>>> handle(InvalidDataAccessApiUsageException e) {
+		return ApiResponse.of(List.of(e.getMessage()), HttpStatus.NOT_FOUND);
+	}
+
+	@ExceptionHandler
+	@ResponseStatus(code = HttpStatus.NOT_ACCEPTABLE)
+	public ResponseEntity<ApiResponse<List<String>>> handle(IllegalStateException e) {
+		return ApiResponse.of(List.of(e.getMessage()), HttpStatus.NOT_ACCEPTABLE);
+	}
+
+	@ExceptionHandler
+	@ResponseStatus(code = HttpStatus.BAD_REQUEST)
+	public ResponseEntity<ApiResponse<List<String>>> handle(InvalidPackageCountryException e) {
+		return ApiResponse.of(List.of(e.getMessage()), HttpStatus.BAD_REQUEST);
+	}
+
+	@ExceptionHandler
+	@ResponseStatus(code = HttpStatus.BAD_REQUEST)
+	public ResponseEntity<ApiResponse<List<String>>> handle(InsufficientCreditsException e) {
+		return ApiResponse.of(List.of(e.getMessage()), HttpStatus.BAD_REQUEST);
 	}
 
 	@ExceptionHandler

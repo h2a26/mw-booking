@@ -1,5 +1,6 @@
 package org.codigo.middleware.mwbooking.api.output.package_;
 
+import org.codigo.middleware.mwbooking.commons.enum_.PackageStatus;
 import org.codigo.middleware.mwbooking.entity.UserPackage;
 
 import java.math.BigDecimal;
@@ -11,6 +12,7 @@ public record UserPackageResponse(
         int remainingCredits,
         BigDecimal price,
         String country,
+        PackageStatus status,
         boolean isExpired,
         ZonedDateTime expirationDate
 ) {
@@ -21,6 +23,7 @@ public record UserPackageResponse(
                 userPackage.getRemainingCredits(),
                 userPackage.getPackageEntity().getPrice(),
                 userPackage.getPackageEntity().getCountry(),
+                userPackage.getStatus(),
                 userPackage.getExpirationDate().isBefore(ZonedDateTime.now()),
                 userPackage.getExpirationDate()
         );
