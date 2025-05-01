@@ -80,7 +80,7 @@ public class ClassCacheService {
         return recordList;
     }
 
-    private List<Class_> update_available_class_list_by_country(Class_ clazz) {
+    private void update_available_class_list_by_country(Class_ clazz) {
         String key = class_l_key_prefix + clazz.getCountry();
         List<Class_> recordList = redisUtil.getList(key, Class_.class);
 
@@ -93,7 +93,6 @@ public class ClassCacheService {
         updatedList.add(clazz);
         setList(key, updatedList);
 
-        return updatedList;
     }
 
     private void set(String key, Class_ classEntity) {
