@@ -4,7 +4,7 @@ A robust, concurrent, and country-aware booking system built with Java, Spring B
 
 ---
 
-## Features
+## 🚀 Features
 
 ### 1. User Module
 - **Registration & Login:** Secure user registration and authentication. Registration requires email verification (mocked for local/dev).
@@ -44,7 +44,7 @@ A robust, concurrent, and country-aware booking system built with Java, Spring B
 
 ---
 
-## Technology Stack
+## ⚙️ Tech Stack
 
 - **Java 21**
 - **Spring Boot 3.4.5**
@@ -77,7 +77,7 @@ src/main/java/org/codigo/middleware/mwbooking/
 
 ---
 
-## Setup & Run
+## ⚡ Setup & Run
 
 ### Prerequisites
 - Java 21
@@ -100,24 +100,30 @@ docker-compose up -d
 ./mvnw spring-boot:run
 ```
 
-### API Endpoints
 
-- User: `/api/user/*`
-- Package: `/api/package/*`
-- Booking/Schedule: `/api/booking/*`
-- Auth: `/api/auth/*`
+## 🔌 API Access
 
-See [HELP.md](HELP.md) or Swagger (if enabled) for full API documentation.
+The MW Booking System exposes RESTful APIs for all core modules:
 
----
+| Module                | Base Endpoint         | Description                              |
+|-----------------------|-----------------------|------------------------------------------|
+| **User Module**       | `/booking/user/*`     | User profile, password, and account actions |
+| **Package Module**    | `/booking/package/*`  | Country-specific package listing & purchase |
+| **Booking Module**    | `/booking/bookings/*` | Class schedules, bookings, cancellations, waitlists |
+| **Authentication**    | `/booking/auth/*`     | User registration, login, and token management |
 
-## Testing
+## 📘 API Documentation
 
-```bash
-./mvnw test
-```
+Explore and test all endpoints using the integrated Swagger UI:
 
----
+➡️ **[Swagger UI – http://localhost:8080/booking/swagger-ui/index.html](http://localhost:8080/booking/swagger-ui/index.html)**
+
+Swagger provides detailed information about request/response schemas, parameters, and available operations for each endpoint.
+
+
+
+
+
 
 ## Concurrency & Waitlist Design
 
