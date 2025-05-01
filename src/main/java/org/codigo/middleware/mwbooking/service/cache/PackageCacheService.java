@@ -21,11 +21,6 @@ public class PackageCacheService {
         this.redisUtil = redisUtil;
     }
 
-    @Value("${app.redis.package_e.key_prefix}")
-    private String package_e_key_prefix;
-    @Value("${app.redis.package_e.key_ttl}")
-    private long package_e_key_ttl;
-
     @Value("${app.redis.package_l.key_prefix}")
     private String package_l_key_prefix;
     @Value("${app.redis.package_l.key_ttl}")
@@ -67,10 +62,6 @@ public class PackageCacheService {
         updatedList.add(package_e);
         setList(key, updatedList);
 
-    }
-
-    private void set(String key, Package_ package_e) {
-        redisUtil.setHash(key, package_e, package_e_key_ttl, TimeUnit.MINUTES);
     }
 
     private void setList(String key, List<Package_> packageList) {

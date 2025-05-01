@@ -47,9 +47,6 @@ app:
     user_e:
       key_prefix: "user:"
       key_ttl: 15
-    package_e:
-      key_prefix: "package:"
-      key_ttl: 15
     package_l:
       key_prefix: "available_packages_by_country:"
       key_ttl: 15
