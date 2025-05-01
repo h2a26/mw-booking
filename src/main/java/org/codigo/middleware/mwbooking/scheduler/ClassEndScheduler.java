@@ -18,9 +18,9 @@ public class ClassEndScheduler {
     /**
      * Run daily every hour to be when class end waitlist user credit need to be refunded
      */
-    @Scheduled(cron = "0 */10 * * * ?")
+    @Scheduled(cron = "0 0 * * * *")
     public void refundWaitlistUserCreditsWhenClassEnd() {
-        log.info("refundWaitlistUserCreditsWhenClassEnd job run.");
+        log.info("Invoked ClassEndScheduler#refundWaitlistUserCreditsWhenClassEnd job.");
         classService.refundWaitlistUserCreditsWhenClassEnd();
     }
 }

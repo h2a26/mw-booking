@@ -1,0 +1,2612 @@
+{
+	"info": {
+		"_postman_id": "c97ce696-2dd0-439e-95f8-aa05c2de8b4a",
+		"name": "mw-booking",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "33520293"
+	},
+	"item": [
+		{
+			"name": "auth_module",
+			"item": [
+				{
+					"name": "auth/generate-otp",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"heindaemon@gmail.com\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}{{v1_url}}/auth/generate-otp",
+							"host": [
+								"{{base_url}}{{v1_url}}"
+							],
+							"path": [
+								"auth",
+								"generate-otp"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "auth/generate-otp",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"email\": \"heindaemon@gmail.com\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}{{v1_url}}/auth/generate-otp",
+									"host": [
+										"{{base_url}}{{v1_url}}"
+									],
+									"path": [
+										"auth",
+										"generate-otp"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Vary",
+									"value": "Access-Control-Request-Method"
+								},
+								{
+									"key": "Vary",
+									"value": "Access-Control-Request-Headers"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "0"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Expires",
+									"value": "0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 01 May 2025 21:02:29 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"timeStamp\": \"2025-05-02 03:32:29\",\n    \"statusCode\": 200,\n    \"httpStatus\": \"OK\",\n    \"message\": \"OK\",\n    \"data\": \"OTP has been sent to your email heindaemon@gmail.com.\"\n}"
+						}
+					]
+				},
+				{
+					"name": "auth/verify-otp",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"heindaemon@gmail.com\",\n    \"OTP\": \"996683\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}{{v1_url}}/auth/verify-otp",
+							"host": [
+								"{{base_url}}{{v1_url}}"
+							],
+							"path": [
+								"auth",
+								"verify-otp"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "auth/verify-otp",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"email\": \"heindaemon@gmail.com\",\n    \"OTP\": \"996683\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}{{v1_url}}/auth/verify-otp",
+									"host": [
+										"{{base_url}}{{v1_url}}"
+									],
+									"path": [
+										"auth",
+										"verify-otp"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Vary",
+									"value": "Access-Control-Request-Method"
+								},
+								{
+									"key": "Vary",
+									"value": "Access-Control-Request-Headers"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "0"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Expires",
+									"value": "0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 01 May 2025 21:02:53 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"timeStamp\": \"2025-05-02 03:32:53\",\n    \"statusCode\": 200,\n    \"httpStatus\": \"OK\",\n    \"message\": \"OK\",\n    \"data\": {\n        \"email\": \"heindaemon@gmail.com\",\n        \"isVerified\": false\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "auth/register",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"username\": \"hein\",\n    \"email\": \"heindaemon@gmail.com\",\n    \"password\": \"hein\",\n    \"country\": \"SG\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}{{v1_url}}/auth/register",
+							"host": [
+								"{{base_url}}{{v1_url}}"
+							],
+							"path": [
+								"auth",
+								"register"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "auth/register",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"username\": \"hein\",\n    \"email\": \"heindaemon@gmail.com\",\n    \"password\": \"hein\",\n    \"country\": \"SG\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}{{v1_url}}/auth/register",
+									"host": [
+										"{{base_url}}{{v1_url}}"
+									],
+									"path": [
+										"auth",
+										"register"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Vary",
+									"value": "Access-Control-Request-Method"
+								},
+								{
+									"key": "Vary",
+									"value": "Access-Control-Request-Headers"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "0"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Expires",
+									"value": "0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 01 May 2025 21:03:06 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"timeStamp\": \"2025-05-02 03:33:06\",\n    \"statusCode\": 200,\n    \"httpStatus\": \"OK\",\n    \"message\": \"OK\",\n    \"data\": {\n        \"username\": \"hein\",\n        \"email\": \"heindaemon@gmail.com\",\n        \"country\": \"SG\",\n        \"isVerified\": true\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "auth/login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let jsonResponse = pm.response.json();",
+									"pm.collectionVariables.set(\"accessToken\", jsonResponse.data.accessToken);",
+									"pm.collectionVariables.set(\"refreshToken\", jsonResponse.data.refreshToken);",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"{{email}}\",\n    \"password\": \"{{password}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}{{v1_url}}/auth/login",
+							"host": [
+								"{{base_url}}{{v1_url}}"
+							],
+							"path": [
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "auth/login",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"email\": \"{{email}}\",\n    \"password\": \"{{password}}\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}{{v1_url}}/auth/login",
+									"host": [
+										"{{base_url}}{{v1_url}}"
+									],
+									"path": [
+										"auth",
+										"login"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Vary",
+									"value": "Access-Control-Request-Method"
+								},
+								{
+									"key": "Vary",
+									"value": "Access-Control-Request-Headers"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "0"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Expires",
+									"value": "0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 01 May 2025 21:04:12 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"timeStamp\": \"2025-05-02 03:34:12\",\n    \"statusCode\": 200,\n    \"httpStatus\": \"OK\",\n    \"message\": \"OK\",\n    \"data\": {\n        \"email\": \"heindaemon@gmail.com\",\n        \"accessToken\": \"eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJoZWluZGFlbW9uQGdtYWlsLmNvbSIsImlzcyI6Im9yZy5jb2RpZ28ubXdib29raW5nIiwiaWF0IjoxNzQ2MTMzNDUyLCJleHAiOjE3NDYxMzM3NTIsInJvbCI6IlJPTEVfVVNFUiIsInR5cCI6IkFjY2VzcyJ9.MLfOOlMA0sMfNHQn9TyE54owcH_doKmGuYOUI2GdRDP1YGxE5smnk36THpDmC0COzg4qjrAZvjk9Z-Ev2OPscQ\",\n        \"refreshToken\": \"eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJoZWluZGFlbW9uQGdtYWlsLmNvbSIsImlzcyI6Im9yZy5jb2RpZ28ubXdib29raW5nIiwiaWF0IjoxNzQ2MTMzNDUyLCJleHAiOjE3NDYyMjM0NTIsInJvbCI6IlJPTEVfVVNFUiIsInR5cCI6IlJlZnJlc2gifQ.PNO55A_KUI6rVNPWrAkyrrZZjaA2gX81StOftGCX_UOsJefOuK0b46B3zGjHeKKqs0S2198S3PnUUT4umhXccQ\"\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "users/profile",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"// This script will just add the accessToken to the Authorization header if available",
+									"if (pm.collectionVariables.get(\"accessToken\")) {",
+									"    pm.request.headers.add({",
+									"        key: \"Authorization\",",
+									"        value: \"Bearer \" + pm.collectionVariables.get(\"accessToken\")",
+									"    });",
+									"}",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}{{v1_url}}/auth/profile",
+							"host": [
+								"{{base_url}}{{v1_url}}"
+							],
+							"path": [
+								"auth",
+								"profile"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "users/profile",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}{{v1_url}}/auth/profile",
+									"host": [
+										"{{base_url}}{{v1_url}}"
+									],
+									"path": [
+										"auth",
+										"profile"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Vary",
+									"value": "Access-Control-Request-Method"
+								},
+								{
+									"key": "Vary",
+									"value": "Access-Control-Request-Headers"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "0"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Expires",
+									"value": "0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 01 May 2025 21:04:22 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"timeStamp\": \"2025-05-02 03:34:22\",\n    \"statusCode\": 200,\n    \"httpStatus\": \"OK\",\n    \"message\": \"OK\",\n    \"data\": {\n        \"username\": \"hein\",\n        \"email\": \"heindaemon@gmail.com\",\n        \"password\": \"$2a$10$LiQoyPVmjzZeZKYzIMNUNuy8qJTGZnlrtoX.E1QwCl35gCUQ87Wqy\",\n        \"country\": \"SG\",\n        \"isVerified\": true\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "users/change-password",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"// This script will just add the accessToken to the Authorization header if available",
+									"if (pm.collectionVariables.get(\"accessToken\")) {",
+									"    pm.request.headers.add({",
+									"        key: \"Authorization\",",
+									"        value: \"Bearer \" + pm.collectionVariables.get(\"accessToken\")",
+									"    });",
+									"}",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"oldPassword\": \"hein\",\n    \"newPassword\": \"password123\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}{{v1_url}}/auth/change-password",
+							"host": [
+								"{{base_url}}{{v1_url}}"
+							],
+							"path": [
+								"auth",
+								"change-password"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "users/change-password",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"oldPassword\": \"hein\",\n    \"newPassword\": \"password123\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}{{v1_url}}/auth/change-password",
+									"host": [
+										"{{base_url}}{{v1_url}}"
+									],
+									"path": [
+										"auth",
+										"change-password"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Vary",
+									"value": "Access-Control-Request-Method"
+								},
+								{
+									"key": "Vary",
+									"value": "Access-Control-Request-Headers"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "0"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Expires",
+									"value": "0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 01 May 2025 21:04:39 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"timeStamp\": \"2025-05-02 03:34:39\",\n    \"statusCode\": 200,\n    \"httpStatus\": \"OK\",\n    \"message\": \"OK\",\n    \"data\": {\n        \"username\": \"hein\",\n        \"email\": \"heindaemon@gmail.com\",\n        \"password\": \"$2a$10$JiSQJbYTNi2BQQdhYMfXzedLSb1kUtmlk.XbCzLUkNSbnCUAb6FnC\",\n        \"country\": \"SG\",\n        \"isVerified\": true\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "auth/resend-otp",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"heindaemon@gmail.com\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}{{v1_url}}/auth/resend-otp",
+							"host": [
+								"{{base_url}}{{v1_url}}"
+							],
+							"path": [
+								"auth",
+								"resend-otp"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "auth/resend-otp",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"email\": \"heindaemon@gmail.com\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}{{v1_url}}/auth/resend-otp",
+									"host": [
+										"{{base_url}}{{v1_url}}"
+									],
+									"path": [
+										"auth",
+										"resend-otp"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Vary",
+									"value": "Access-Control-Request-Method"
+								},
+								{
+									"key": "Vary",
+									"value": "Access-Control-Request-Headers"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "0"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Expires",
+									"value": "0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 01 May 2025 21:05:11 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"timeStamp\": \"2025-05-02 03:35:11\",\n    \"statusCode\": 200,\n    \"httpStatus\": \"OK\",\n    \"message\": \"OK\",\n    \"data\": \"OTP has been resent to your email heindaemon@gmail.com.\"\n}"
+						}
+					]
+				},
+				{
+					"name": "auth/reset-password",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"heindaemon@gmail.com\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}{{v1_url}}/auth/reset-password",
+							"host": [
+								"{{base_url}}{{v1_url}}"
+							],
+							"path": [
+								"auth",
+								"reset-password"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "auth/reset-password",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"email\": \"heindaemon@gmail.com\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}{{v1_url}}/auth/reset-password",
+									"host": [
+										"{{base_url}}{{v1_url}}"
+									],
+									"path": [
+										"auth",
+										"reset-password"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Vary",
+									"value": "Access-Control-Request-Method"
+								},
+								{
+									"key": "Vary",
+									"value": "Access-Control-Request-Headers"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "0"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Expires",
+									"value": "0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 01 May 2025 21:05:31 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"timeStamp\": \"2025-05-02 03:35:31\",\n    \"statusCode\": 200,\n    \"httpStatus\": \"OK\",\n    \"message\": \"OK\",\n    \"data\": \"Temporary OTP has been sent to heindaemon@gmail.com for reset password.\"\n}"
+						}
+					]
+				},
+				{
+					"name": "auth/reset-password-confirm",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"heindaemon@gmail.com\",\n    \"OTP\": \"111194\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}{{v1_url}}/auth/reset-password-confirm",
+							"host": [
+								"{{base_url}}{{v1_url}}"
+							],
+							"path": [
+								"auth",
+								"reset-password-confirm"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "auth/reset-password-confirm",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"email\": \"heindaemon@gmail.com\",\n    \"OTP\": \"111194\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}{{v1_url}}/auth/reset-password-confirm",
+									"host": [
+										"{{base_url}}{{v1_url}}"
+									],
+									"path": [
+										"auth",
+										"reset-password-confirm"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Vary",
+									"value": "Access-Control-Request-Method"
+								},
+								{
+									"key": "Vary",
+									"value": "Access-Control-Request-Headers"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "0"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Expires",
+									"value": "0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 01 May 2025 21:05:58 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"timeStamp\": \"2025-05-02 03:35:58\",\n    \"statusCode\": 200,\n    \"httpStatus\": \"OK\",\n    \"message\": \"OK\",\n    \"data\": \"Reset Pin email sent to heindaemon@gmail.com, use this rest pin to login and change password for your security.\"\n}"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "package_module",
+			"item": [
+				{
+					"name": "packages",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"// This script will just add the accessToken to the Authorization header if available",
+									"if (pm.collectionVariables.get(\"accessToken\")) {",
+									"    pm.request.headers.add({",
+									"        key: \"Authorization\",",
+									"        value: \"Bearer \" + pm.collectionVariables.get(\"accessToken\")",
+									"    });",
+									"}",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}{{v1_url}}/packages?country=MM",
+							"host": [
+								"{{base_url}}{{v1_url}}"
+							],
+							"path": [
+								"packages"
+							],
+							"query": [
+								{
+									"key": "country",
+									"value": "MM"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "packages",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}{{v1_url}}/packages?country=MM",
+									"host": [
+										"{{base_url}}{{v1_url}}"
+									],
+									"path": [
+										"packages"
+									],
+									"query": [
+										{
+											"key": "country",
+											"value": "MM"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Vary",
+									"value": "Access-Control-Request-Method"
+								},
+								{
+									"key": "Vary",
+									"value": "Access-Control-Request-Headers"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "0"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Expires",
+									"value": "0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 01 May 2025 21:06:09 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"timeStamp\": \"2025-05-02 03:36:09\",\n    \"statusCode\": 200,\n    \"httpStatus\": \"OK\",\n    \"message\": \"OK\",\n    \"data\": [\n        {\n            \"id\": 3,\n            \"packageName\": \"Standard Plan\",\n            \"totalCredits\": 15,\n            \"price\": 149.99,\n            \"expiryDays\": 45,\n            \"country\": \"MM\"\n        }\n    ]\n}"
+						}
+					]
+				},
+				{
+					"name": "packages/me",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"// This script will just add the accessToken to the Authorization header if available",
+									"if (pm.collectionVariables.get(\"accessToken\")) {",
+									"    pm.request.headers.add({",
+									"        key: \"Authorization\",",
+									"        value: \"Bearer \" + pm.collectionVariables.get(\"accessToken\")",
+									"    });",
+									"}",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}{{v1_url}}/packages/me",
+							"host": [
+								"{{base_url}}{{v1_url}}"
+							],
+							"path": [
+								"packages",
+								"me"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "packages/me",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}{{v1_url}}/packages/me",
+									"host": [
+										"{{base_url}}{{v1_url}}"
+									],
+									"path": [
+										"packages",
+										"me"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Vary",
+									"value": "Access-Control-Request-Method"
+								},
+								{
+									"key": "Vary",
+									"value": "Access-Control-Request-Headers"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "0"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Expires",
+									"value": "0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 01 May 2025 21:06:39 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"timeStamp\": \"2025-05-02 03:36:39\",\n    \"statusCode\": 200,\n    \"httpStatus\": \"OK\",\n    \"message\": \"OK\",\n    \"data\": [\n        {\n            \"packageId\": 3,\n            \"packageName\": \"Standard Plan\",\n            \"remainingCredits\": 15,\n            \"price\": 149.99,\n            \"country\": \"MM\",\n            \"status\": \"ACTIVE\",\n            \"isExpired\": false,\n            \"expirationDate\": \"2025-06-15T21:06:28.11585Z\"\n        },\n        {\n            \"packageId\": 3,\n            \"packageName\": \"Standard Plan\",\n            \"remainingCredits\": 15,\n            \"price\": 149.99,\n            \"country\": \"MM\",\n            \"status\": \"ACTIVE\",\n            \"isExpired\": false,\n            \"expirationDate\": \"2025-06-15T21:06:35.257859Z\"\n        }\n    ]\n}"
+						}
+					]
+				},
+				{
+					"name": "packages/purchase",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"// This script will just add the accessToken to the Authorization header if available",
+									"if (pm.collectionVariables.get(\"accessToken\")) {",
+									"    pm.request.headers.add({",
+									"        key: \"Authorization\",",
+									"        value: \"Bearer \" + pm.collectionVariables.get(\"accessToken\")",
+									"    });",
+									"}",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"packageId\": 3\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}{{v1_url}}/packages/purchase",
+							"host": [
+								"{{base_url}}{{v1_url}}"
+							],
+							"path": [
+								"packages",
+								"purchase"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "packages/purchase",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"packageId\": 3\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}{{v1_url}}/packages/purchase",
+									"host": [
+										"{{base_url}}{{v1_url}}"
+									],
+									"path": [
+										"packages",
+										"purchase"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Vary",
+									"value": "Access-Control-Request-Method"
+								},
+								{
+									"key": "Vary",
+									"value": "Access-Control-Request-Headers"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "0"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Expires",
+									"value": "0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 01 May 2025 21:06:28 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"timeStamp\": \"2025-05-02 03:36:28\",\n    \"statusCode\": 200,\n    \"httpStatus\": \"OK\",\n    \"message\": \"OK\",\n    \"data\": {\n        \"packageId\": 3,\n        \"packageName\": \"Standard Plan\",\n        \"remainingCredits\": 15,\n        \"price\": 149.99,\n        \"country\": \"MM\",\n        \"isExpired\": false,\n        \"expirationDate\": \"2025-06-16T03:36:28.11585+06:30\"\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "packages/register",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"// This script will just add the accessToken to the Authorization header if available",
+									"if (pm.collectionVariables.get(\"accessToken\")) {",
+									"    pm.request.headers.add({",
+									"        key: \"Authorization\",",
+									"        value: \"Bearer \" + pm.collectionVariables.get(\"accessToken\")",
+									"    });",
+									"}"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"packageName\": \"Basic Plan\",\n    \"totalCredits\": 15,\n    \"price\": 80,\n    \"expiryDays\": 3,\n    \"country\": \"MM\"\n}\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}{{v1_url}}/packages/register",
+							"host": [
+								"{{base_url}}{{v1_url}}"
+							],
+							"path": [
+								"packages",
+								"register"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "packages/register",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"packageName\": \"Basic Plan\",\n    \"totalCredits\": 15,\n    \"price\": 80,\n    \"expiryDays\": 3,\n    \"country\": \"MM\"\n}\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}{{v1_url}}/packages/register",
+									"host": [
+										"{{base_url}}{{v1_url}}"
+									],
+									"path": [
+										"packages",
+										"register"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Vary",
+									"value": "Access-Control-Request-Method"
+								},
+								{
+									"key": "Vary",
+									"value": "Access-Control-Request-Headers"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "0"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Expires",
+									"value": "0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 01 May 2025 21:07:05 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"timeStamp\": \"2025-05-02 03:37:05\",\n    \"statusCode\": 200,\n    \"httpStatus\": \"OK\",\n    \"message\": \"OK\",\n    \"data\": {\n        \"packageName\": \"Basic Plan\",\n        \"totalCredits\": 15,\n        \"price\": 80,\n        \"expiryDays\": 3,\n        \"country\": \"MM\"\n    }\n}"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "booking_module",
+			"item": [
+				{
+					"name": "classes",
+					"item": [
+						{
+							"name": "classes?country=MM",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"// This script will just add the accessToken to the Authorization header if available",
+											"if (pm.collectionVariables.get(\"accessToken\")) {",
+											"    pm.request.headers.add({",
+											"        key: \"Authorization\",",
+											"        value: \"Bearer \" + pm.collectionVariables.get(\"accessToken\")",
+											"    });",
+											"}",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}{{v1_url}}/classes?country=MM",
+									"host": [
+										"{{base_url}}{{v1_url}}"
+									],
+									"path": [
+										"classes"
+									],
+									"query": [
+										{
+											"key": "country",
+											"value": "MM"
+										}
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "classes?country=MM",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{base_url}}{{v1_url}}/classes?country=MM",
+											"host": [
+												"{{base_url}}{{v1_url}}"
+											],
+											"path": [
+												"classes"
+											],
+											"query": [
+												{
+													"key": "country",
+													"value": "MM"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Vary",
+											"value": "Origin"
+										},
+										{
+											"key": "Vary",
+											"value": "Access-Control-Request-Method"
+										},
+										{
+											"key": "Vary",
+											"value": "Access-Control-Request-Headers"
+										},
+										{
+											"key": "X-Content-Type-Options",
+											"value": "nosniff"
+										},
+										{
+											"key": "X-XSS-Protection",
+											"value": "0"
+										},
+										{
+											"key": "Cache-Control",
+											"value": "no-cache, no-store, max-age=0, must-revalidate"
+										},
+										{
+											"key": "Pragma",
+											"value": "no-cache"
+										},
+										{
+											"key": "Expires",
+											"value": "0"
+										},
+										{
+											"key": "X-Frame-Options",
+											"value": "DENY"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										},
+										{
+											"key": "Transfer-Encoding",
+											"value": "chunked"
+										},
+										{
+											"key": "Date",
+											"value": "Thu, 01 May 2025 21:07:16 GMT"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=60"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"timeStamp\": \"2025-05-02 03:37:16\",\n    \"statusCode\": 200,\n    \"httpStatus\": \"OK\",\n    \"message\": \"OK\",\n    \"data\": [\n        {\n            \"id\": 2,\n            \"className\": \"Boxing\",\n            \"country\": \"MM\",\n            \"requiredCredits\": 5,\n            \"availableSlots\": 1,\n            \"startDate\": \"2025-05-01 23:01 Z\",\n            \"endDate\": \"2025-05-08 21:01 Z\",\n            \"businessName\": \"Fitness Studio\"\n        }\n    ]\n}"
+								}
+							]
+						},
+						{
+							"name": "classes",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"// This script will just add the accessToken to the Authorization header if available",
+											"if (pm.collectionVariables.get(\"accessToken\")) {",
+											"    pm.request.headers.add({",
+											"        key: \"Authorization\",",
+											"        value: \"Bearer \" + pm.collectionVariables.get(\"accessToken\")",
+											"    });",
+											"}",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"className\": \"Football\",\n    \"country\": \"MM\",\n    \"requiredCredits\": 4,\n    \"availableSlots\": 1,\n    \"classStartDate\": \"2025-06-01T10:30:00+00:00\",\n    \"classEndDate\": \"2025-12-08T10:30:00+00:00\",\n    \"businessId\": 1\n}\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}{{v1_url}}/classes",
+									"host": [
+										"{{base_url}}{{v1_url}}"
+									],
+									"path": [
+										"classes"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "classes",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"className\": \"Football\",\n    \"country\": \"MM\",\n    \"requiredCredits\": 4,\n    \"availableSlots\": 1,\n    \"classStartDate\": \"2025-06-01T10:30:00+00:00\",\n    \"classEndDate\": \"2025-12-08T10:30:00+00:00\",\n    \"businessId\": 1\n}\n",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{base_url}}{{v1_url}}/classes",
+											"host": [
+												"{{base_url}}{{v1_url}}"
+											],
+											"path": [
+												"classes"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Vary",
+											"value": "Origin"
+										},
+										{
+											"key": "Vary",
+											"value": "Access-Control-Request-Method"
+										},
+										{
+											"key": "Vary",
+											"value": "Access-Control-Request-Headers"
+										},
+										{
+											"key": "X-Content-Type-Options",
+											"value": "nosniff"
+										},
+										{
+											"key": "X-XSS-Protection",
+											"value": "0"
+										},
+										{
+											"key": "Cache-Control",
+											"value": "no-cache, no-store, max-age=0, must-revalidate"
+										},
+										{
+											"key": "Pragma",
+											"value": "no-cache"
+										},
+										{
+											"key": "Expires",
+											"value": "0"
+										},
+										{
+											"key": "X-Frame-Options",
+											"value": "DENY"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										},
+										{
+											"key": "Transfer-Encoding",
+											"value": "chunked"
+										},
+										{
+											"key": "Date",
+											"value": "Thu, 01 May 2025 21:07:24 GMT"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=60"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"timeStamp\": \"2025-05-02 03:37:24\",\n    \"statusCode\": 200,\n    \"httpStatus\": \"OK\",\n    \"message\": \"OK\",\n    \"data\": {\n        \"classId\": 3,\n        \"className\": \"Football\",\n        \"country\": \"MM\",\n        \"requiredCredits\": 4,\n        \"availableSlots\": 1,\n        \"classDate\": \"2025-06-01T10:30:00Z\",\n        \"businessName\": \"Yoga Center\"\n    }\n}"
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "booking",
+					"item": [
+						{
+							"name": "bookings",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"// This script will just add the accessToken to the Authorization header if available",
+											"if (pm.collectionVariables.get(\"accessToken\")) {",
+											"    pm.request.headers.add({",
+											"        key: \"Authorization\",",
+											"        value: \"Bearer \" + pm.collectionVariables.get(\"accessToken\")",
+											"    });",
+											"}",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"classId\": 3,\n    \"userPackageId\": 3\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}{{v1_url}}/bookings",
+									"host": [
+										"{{base_url}}{{v1_url}}"
+									],
+									"path": [
+										"bookings"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "bookings",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"classId\": 2,\n    \"userPackageId\": 2\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{base_url}}{{v1_url}}/bookings",
+											"host": [
+												"{{base_url}}{{v1_url}}"
+											],
+											"path": [
+												"bookings"
+											]
+										}
+									},
+									"status": "Bad Request",
+									"code": 400,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Vary",
+											"value": "Origin"
+										},
+										{
+											"key": "Vary",
+											"value": "Access-Control-Request-Method"
+										},
+										{
+											"key": "Vary",
+											"value": "Access-Control-Request-Headers"
+										},
+										{
+											"key": "X-Content-Type-Options",
+											"value": "nosniff"
+										},
+										{
+											"key": "X-XSS-Protection",
+											"value": "0"
+										},
+										{
+											"key": "Cache-Control",
+											"value": "no-cache, no-store, max-age=0, must-revalidate"
+										},
+										{
+											"key": "Pragma",
+											"value": "no-cache"
+										},
+										{
+											"key": "Expires",
+											"value": "0"
+										},
+										{
+											"key": "X-Frame-Options",
+											"value": "DENY"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										},
+										{
+											"key": "Transfer-Encoding",
+											"value": "chunked"
+										},
+										{
+											"key": "Date",
+											"value": "Thu, 01 May 2025 21:07:32 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "close"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"timeStamp\": \"2025-05-02 03:37:32\",\n    \"statusCode\": 400,\n    \"httpStatus\": \"BAD_REQUEST\",\n    \"message\": \"BAD REQUEST\",\n    \"data\": [\n        \"Package does not belong to current user.\"\n    ]\n}"
+								},
+								{
+									"name": "bookings",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"classId\": 3,\n    \"userPackageId\": 3\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{base_url}}{{v1_url}}/bookings",
+											"host": [
+												"{{base_url}}{{v1_url}}"
+											],
+											"path": [
+												"bookings"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Vary",
+											"value": "Origin"
+										},
+										{
+											"key": "Vary",
+											"value": "Access-Control-Request-Method"
+										},
+										{
+											"key": "Vary",
+											"value": "Access-Control-Request-Headers"
+										},
+										{
+											"key": "X-Content-Type-Options",
+											"value": "nosniff"
+										},
+										{
+											"key": "X-XSS-Protection",
+											"value": "0"
+										},
+										{
+											"key": "Cache-Control",
+											"value": "no-cache, no-store, max-age=0, must-revalidate"
+										},
+										{
+											"key": "Pragma",
+											"value": "no-cache"
+										},
+										{
+											"key": "Expires",
+											"value": "0"
+										},
+										{
+											"key": "X-Frame-Options",
+											"value": "DENY"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										},
+										{
+											"key": "Transfer-Encoding",
+											"value": "chunked"
+										},
+										{
+											"key": "Date",
+											"value": "Thu, 01 May 2025 21:09:02 GMT"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=60"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"timeStamp\": \"2025-05-02 03:39:02\",\n    \"statusCode\": 200,\n    \"httpStatus\": \"OK\",\n    \"message\": \"OK\",\n    \"data\": {\n        \"bookingId\": 1,\n        \"classId\": 3,\n        \"className\": \"Football\",\n        \"status\": \"BOOKED\",\n        \"classStartDate\": \"2025-06-01T10:30:00Z\",\n        \"classEndDate\": \"2025-12-08T10:30:00Z\"\n    }\n}"
+								}
+							]
+						},
+						{
+							"name": "bookings/cancel",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"// This script will just add the accessToken to the Authorization header if available",
+											"if (pm.collectionVariables.get(\"accessToken\")) {",
+											"    pm.request.headers.add({",
+											"        key: \"Authorization\",",
+											"        value: \"Bearer \" + pm.collectionVariables.get(\"accessToken\")",
+											"    });",
+											"}",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"bookingId\": 1\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}{{v1_url}}/bookings/cancel",
+									"host": [
+										"{{base_url}}{{v1_url}}"
+									],
+									"path": [
+										"bookings",
+										"cancel"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "bookings/cancel",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"bookingId\": 1\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{base_url}}{{v1_url}}/bookings/cancel",
+											"host": [
+												"{{base_url}}{{v1_url}}"
+											],
+											"path": [
+												"bookings",
+												"cancel"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Vary",
+											"value": "Origin"
+										},
+										{
+											"key": "Vary",
+											"value": "Access-Control-Request-Method"
+										},
+										{
+											"key": "Vary",
+											"value": "Access-Control-Request-Headers"
+										},
+										{
+											"key": "X-Content-Type-Options",
+											"value": "nosniff"
+										},
+										{
+											"key": "X-XSS-Protection",
+											"value": "0"
+										},
+										{
+											"key": "Cache-Control",
+											"value": "no-cache, no-store, max-age=0, must-revalidate"
+										},
+										{
+											"key": "Pragma",
+											"value": "no-cache"
+										},
+										{
+											"key": "Expires",
+											"value": "0"
+										},
+										{
+											"key": "X-Frame-Options",
+											"value": "DENY"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										},
+										{
+											"key": "Transfer-Encoding",
+											"value": "chunked"
+										},
+										{
+											"key": "Date",
+											"value": "Thu, 01 May 2025 21:10:00 GMT"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=60"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"timeStamp\": \"2025-05-02 03:40:00\",\n    \"statusCode\": 200,\n    \"httpStatus\": \"OK\",\n    \"message\": \"OK\",\n    \"data\": {\n        \"bookingId\": 1,\n        \"className\": \"Football\",\n        \"bookingTime\": \"2025-05-01T21:09:02.820999Z\",\n        \"status\": \"CANCELED\",\n        \"isCanceled\": true,\n        \"isRefunded\": true,\n        \"cancellationTime\": \"2025-05-02T03:39:55.598079+06:30\"\n    }\n}"
+								}
+							]
+						},
+						{
+							"name": "bookings",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"// This script will just add the accessToken to the Authorization header if available",
+											"if (pm.collectionVariables.get(\"accessToken\")) {",
+											"    pm.request.headers.add({",
+											"        key: \"Authorization\",",
+											"        value: \"Bearer \" + pm.collectionVariables.get(\"accessToken\")",
+											"    });",
+											"}",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}{{v1_url}}/bookings",
+									"host": [
+										"{{base_url}}{{v1_url}}"
+									],
+									"path": [
+										"bookings"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "bookings",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{base_url}}{{v1_url}}/bookings",
+											"host": [
+												"{{base_url}}{{v1_url}}"
+											],
+											"path": [
+												"bookings"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Vary",
+											"value": "Origin"
+										},
+										{
+											"key": "Vary",
+											"value": "Access-Control-Request-Method"
+										},
+										{
+											"key": "Vary",
+											"value": "Access-Control-Request-Headers"
+										},
+										{
+											"key": "X-Content-Type-Options",
+											"value": "nosniff"
+										},
+										{
+											"key": "X-XSS-Protection",
+											"value": "0"
+										},
+										{
+											"key": "Cache-Control",
+											"value": "no-cache, no-store, max-age=0, must-revalidate"
+										},
+										{
+											"key": "Pragma",
+											"value": "no-cache"
+										},
+										{
+											"key": "Expires",
+											"value": "0"
+										},
+										{
+											"key": "X-Frame-Options",
+											"value": "DENY"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										},
+										{
+											"key": "Transfer-Encoding",
+											"value": "chunked"
+										},
+										{
+											"key": "Date",
+											"value": "Thu, 01 May 2025 21:09:44 GMT"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=60"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"timeStamp\": \"2025-05-02 03:39:44\",\n    \"statusCode\": 200,\n    \"httpStatus\": \"OK\",\n    \"message\": \"OK\",\n    \"data\": [\n        {\n            \"bookingId\": 1,\n            \"userId\": 3,\n            \"classId\": 3,\n            \"className\": \"Football\",\n            \"country\": \"MM\",\n            \"classStartDate\": \"2025-06-01T10:30:00Z\",\n            \"classEndDate\": \"2025-12-08T10:30:00Z\"\n        }\n    ]\n}"
+								}
+							]
+						},
+						{
+							"name": "bookings/check-in",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"// This script will just add the accessToken to the Authorization header if available",
+											"if (pm.collectionVariables.get(\"accessToken\")) {",
+											"    pm.request.headers.add({",
+											"        key: \"Authorization\",",
+											"        value: \"Bearer \" + pm.collectionVariables.get(\"accessToken\")",
+											"    });",
+											"}",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"bookingId\": 1\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}{{v1_url}}/bookings/check-in",
+									"host": [
+										"{{base_url}}{{v1_url}}"
+									],
+									"path": [
+										"bookings",
+										"check-in"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "bookings/check-in",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"bookingId\": 1\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{base_url}}{{v1_url}}/bookings/check-in",
+											"host": [
+												"{{base_url}}{{v1_url}}"
+											],
+											"path": [
+												"bookings",
+												"check-in"
+											]
+										}
+									},
+									"status": "Bad Request",
+									"code": 400,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Vary",
+											"value": "Origin"
+										},
+										{
+											"key": "Vary",
+											"value": "Access-Control-Request-Method"
+										},
+										{
+											"key": "Vary",
+											"value": "Access-Control-Request-Headers"
+										},
+										{
+											"key": "X-Content-Type-Options",
+											"value": "nosniff"
+										},
+										{
+											"key": "X-XSS-Protection",
+											"value": "0"
+										},
+										{
+											"key": "Cache-Control",
+											"value": "no-cache, no-store, max-age=0, must-revalidate"
+										},
+										{
+											"key": "Pragma",
+											"value": "no-cache"
+										},
+										{
+											"key": "Expires",
+											"value": "0"
+										},
+										{
+											"key": "X-Frame-Options",
+											"value": "DENY"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										},
+										{
+											"key": "Transfer-Encoding",
+											"value": "chunked"
+										},
+										{
+											"key": "Date",
+											"value": "Thu, 01 May 2025 21:09:35 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "close"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"timeStamp\": \"2025-05-02 03:39:35\",\n    \"statusCode\": 400,\n    \"httpStatus\": \"BAD_REQUEST\",\n    \"message\": \"BAD REQUEST\",\n    \"data\": [\n        \"Check-in is only allowed from class start time.\"\n    ]\n}"
+								}
+							]
+						}
+					]
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					"",
+					"",
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					"console.log(\"Response Code is: \" + pm.response.code);",
+					"",
+					"// Check if the response status code is 408, indicating an expired access token",
+					"if (pm.response.code === 408) {",
+					"    console.log(\"Access token expired. Attempting to refresh...\");",
+					"",
+					"    // Send a request to refresh the token",
+					"    pm.sendRequest({",
+					"        url: \"http://localhost:8080/booking/auth/refresh\",",
+					"        method: \"POST\",",
+					"        header: {",
+					"            \"Content-Type\": \"application/json\"",
+					"        },",
+					"        body: {",
+					"            mode: \"raw\",",
+					"            raw: JSON.stringify({",
+					"                \"email\": pm.collectionVariables.get(\"email\"),",
+					"                \"refreshToken\": \"Bearer \" + pm.collectionVariables.get(\"refreshToken\")",
+					"            })",
+					"        }",
+					"    }, function (err, response) {",
+					"        if (response && response.code === 200) {",
+					"            let jsonResponse = response.json();",
+					"",
+					"            // Access the new tokens from the 'data' field in the response",
+					"            let newAccessToken = jsonResponse.data.accessToken;",
+					"            let newRefreshToken = jsonResponse.data.refreshToken;",
+					"",
+					"            // Store the new tokens in collection variables",
+					"            pm.collectionVariables.set(\"accessToken\", newAccessToken);",
+					"            pm.collectionVariables.set(\"refreshToken\", newRefreshToken);",
+					"",
+					"            // Remove the old Authorization header if it exists",
+					"            pm.request.headers.upsert({",
+					"                key: \"Authorization\",",
+					"                value: \"Bearer \" + newAccessToken",
+					"            });",
+					"",
+					"            // Retry the original request with the new access token",
+					"            pm.sendRequest(pm.request, function (err, retryResponse) {",
+					"                if (err) {",
+					"                    console.log(\"Retry failed after refresh.\");",
+					"                } else {",
+					"                    console.log(\"Request successfully retried with new access token.\");",
+					"                }",
+					"            });",
+					"        } else {",
+					"            // If refresh fails, clear the tokens and alert user to re-login",
+					"            console.log(\"Refresh token expired. Please log in again.\");",
+					"            pm.collectionVariables.unset(\"accessToken\");",
+					"            pm.collectionVariables.unset(\"refreshToken\");",
+					"        }",
+					"    });",
+					"}",
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "email",
+			"value": "john.doe@example.com",
+			"type": "string"
+		},
+		{
+			"key": "password",
+			"value": "password123",
+			"type": "string"
+		},
+		{
+			"key": "base_url",
+			"value": "http://localhost:8080",
+			"type": "string"
+		},
+		{
+			"key": "v1_url",
+			"value": "/booking",
+			"type": "string"
+		},
+		{
+			"key": "accessToken",
+			"value": ""
+		},
+		{
+			"key": "refreshToken",
+			"value": ""
+		}
+	]
+}
