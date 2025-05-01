@@ -59,7 +59,7 @@ public class AuthServiceImpl implements AuthService {
     @Override
     public VerifyOTPResponse verifyOTP(VerifyOTPRequest verifyOTPRequest) {
         otpService.verifyOTP(verifyOTPRequest.email(), verifyOTPRequest.OTP());
-        Optional<User> userExisted = userCacheService.findByEmailOrElse(verifyOTPRequest.email());
+        Optional<User> userExisted = userCacheService.findByEmailOptional(verifyOTPRequest.email());
         if (userExisted.isPresent()) {
             return VerifyOTPResponse.from(userExisted.get());
         }

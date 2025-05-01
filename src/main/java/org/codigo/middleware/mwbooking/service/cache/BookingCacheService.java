@@ -24,11 +24,6 @@ public class BookingCacheService {
         this.redisUtil = redisUtil;
     }
 
-    @Value("${app.redis.booking_e.key_prefix}")
-    private String booking_e_key_prefix;
-    @Value("${app.redis.booking_e.key_ttl}")
-    private long booking_e_key_ttl;
-
     @Value("${app.redis.booked_booking_list_by_user_id.key_prefix}")
     private String booked_booking_list_by_user_id_key_prefix;
     @Value("${app.redis.booked_booking_list_by_user_id.key_ttl}")
@@ -38,9 +33,6 @@ public class BookingCacheService {
     public Booking save(Booking booking) {
         Booking record = bookingRepo.save(booking);
 
-        String key = booking_e_key_prefix + record.getBookingId();
-        set(key, record);
-
         if (record.getStatus().equals(BookingStatus.BOOKED)) {
             updateBookedBookingListByUserId(booking);
         }
@@ -49,14 +41,7 @@ public class BookingCacheService {
     }
 
     public Booking findById(Long bookingId) {
-        String key = booking_e_key_prefix + bookingId;
-        Booking record = redisUtil.getHash(key, Booking.class);
-
-        if (record == null) {
-            record = bookingRepo.findByBookingId(bookingId);
-            set(key, record);
-        }
-        return record;
+        return bookingRepo.findByBookingId(bookingId);
     }
 
     public List<Booking> findAllBookedBookingByUserId(Long userId) {
@@ -70,7 +55,7 @@ public class BookingCacheService {
         return recordList;
     }
 
-    private List<Booking> updateBookedBookingListByUserId(Booking booking) {
+    private void updateBookedBookingListByUserId(Booking booking) {
         String key = booked_booking_list_by_user_id_key_prefix + booking.getUser().getUserId();
         List<Booking> recordList = redisUtil.getList(key, Booking.class);
 
@@ -83,11 +68,6 @@ public class BookingCacheService {
         updatedList.add(booking);
         setList(key, updatedList);
 
-        return updatedList;
-    }
-
-    private void set(String key, Booking booking) {
-        redisUtil.setHash(key, booking, booking_e_key_ttl, TimeUnit.MINUTES);
     }
 
     private void setList(String key, List<Booking> bookingList) {

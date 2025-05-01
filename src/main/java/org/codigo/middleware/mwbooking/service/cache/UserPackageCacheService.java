@@ -20,10 +20,6 @@ public class UserPackageCacheService {
         this.userPackageRepo = userPackageRepo;
         this.redisUtil = redisUtil;
     }
-    @Value("${app.redis.user_package_e.key_prefix}")
-    private String user_package_e_key_prefix;
-    @Value("${app.redis.user_package_e.key_ttl}")
-    private long user_package_e_key_ttl;
 
     @Value("${app.redis.user_package_l.key_prefix}")
     private String user_package_l_key_prefix;
@@ -32,9 +28,6 @@ public class UserPackageCacheService {
 
     public UserPackage save(UserPackage userPackage) {
         UserPackage record = userPackageRepo.save(userPackage);
-
-        String key = user_package_e_key_prefix + record.getUserPackageId();
-        set(key, record);
 
         update_user_package_list_cache(record);
 
@@ -69,10 +62,6 @@ public class UserPackageCacheService {
 
         updatedList.add(userPackage);
         setList(key, updatedList);
-    }
-
-    private void set(String key, UserPackage userPackage) {
-        redisUtil.setHash(key, userPackage, user_package_e_key_ttl, TimeUnit.MINUTES);
     }
 
     private void setList(String key, List<UserPackage> userPackageList) {
