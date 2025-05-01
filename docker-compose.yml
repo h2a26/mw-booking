@@ -1,0 +1,48 @@
+networks:
+  booking:
+    driver: bridge
+
+volumes:
+  booking-db:
+    driver: local # Persistent storage for db
+  booking-redis:
+    driver: local  # Persistent storage for Redis
+
+services:
+  db:
+    image: postgres:alpine
+    container_name: booking-db
+    environment:
+      - TZ=Asia/Yangon
+      - POSTGRES_DB=booking_db
+      - POSTGRES_USER=bookingusr
+      - POSTGRES_PASSWORD=bookingpwd
+    networks:
+      - booking
+    ports:
+      - 5432:5432
+    volumes:
+      - booking-db:/var/lib/postgresql/data
+
+  redis:
+    image: redis:alpine
+    container_name: booking-redis
+    networks:
+      - booking
+    ports:
+      - 6379:6379
+    volumes:
+      - booking-redis:/data
+
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: booking-app
+    depends_on: # Ensures that services start before the app tries to connect
+      - db
+      - redis
+    networks:
+      - booking
+    ports:
+      - 8080:8080
