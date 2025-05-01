@@ -100,11 +100,12 @@ public class BookingServiceImpl implements BookingService {
         validateCancelBooking(booking, user);
         doCancelBooking(booking);
         updateClassSlotsOnCancel(booking.getClassEntity());
-        if (isEligibleForRefund(booking)) {
+        boolean isEligibleForRefund = isEligibleForRefund(booking);
+        if (isEligibleForRefund) {
             refundBookingCredits(booking, user);
         }
         promoteWaitlistIfPossible(booking.getClassEntity());
-        return CancelBookingResponse.from(booking);
+        return CancelBookingResponse.from(booking, isEligibleForRefund);
     }
 
     private void validateCancelBooking(Booking booking, User user) {
@@ -127,6 +128,7 @@ public class BookingServiceImpl implements BookingService {
         booking.setCanceled(true);
         booking.setCancellationTime(ZonedDateTime.now());
         bookingCacheService.save(booking);
+
     }
 
     private void updateClassSlotsOnCancel(Class_ classEntity) {
@@ -191,6 +193,10 @@ public class BookingServiceImpl implements BookingService {
         if (!booking.getUser().getUserId().equals(user.getUserId())) {
             throw new ApiBusinessException("User does not own this booking.");
         }
+
+        if (!BookingStatus.BOOKED.equals(booking.getStatus())) {
+            throw new ApiBusinessException("Only booked classes can be checked in.");
+        }
     }
 
     // Validate check-in is within allowed time window
@@ -198,10 +204,16 @@ public class BookingServiceImpl implements BookingService {
         ZonedDateTime now = ZonedDateTime.now();
         ZonedDateTime classStart = booking.getClassEntity().getClassStartDate();
         ZonedDateTime classEnd = booking.getClassEntity().getClassEndDate();
-        if (now.isBefore(classStart.minusMinutes(15)) || now.isAfter(classEnd)) {
-            throw new ApiBusinessException("Check-in is only allowed 15 minutes before class until class end.");
+
+        if (now.isBefore(classStart)) {
+            throw new ApiBusinessException("Check-in is only allowed from class start time.");
+        }
+
+        if (now.isAfter(classEnd)) {
+            throw new ApiBusinessException("Check-in is no longer allowed after the class has ended.");
         }
     }
+
 
 
     private void processBooking(User user, Class_ class_e, long selectedUserPackageId) {
@@ -216,7 +228,7 @@ public class BookingServiceImpl implements BookingService {
     }
 
     /**
-     * Refunds credits to the user for the given booking.
+     * Refunds credits to the user for the given booking to the same package.
      */
     private void refundBookingCredits(Booking booking, User user) {
         List<BookingDetail> bookingDetailList = bookingDetailCacheService.findAllByBookingId(booking.getBookingId());

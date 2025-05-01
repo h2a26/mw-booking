@@ -11,16 +11,18 @@ public record CancelBookingResponse(
         ZonedDateTime bookingTime,
         BookingStatus status,
         boolean isCanceled,
+        boolean isRefunded,
         ZonedDateTime cancellationTime
 
 ) {
-    public static CancelBookingResponse from(Booking booking) {
+    public static CancelBookingResponse from(Booking booking, boolean isRefunded) {
         return new CancelBookingResponse(
                 booking.getBookingId(),
                 booking.getClassEntity().getClassName(),
                 booking.getBookingTime(),
                 booking.getStatus(),
                 booking.isCanceled(),
+                isRefunded,
                 booking.getCancellationTime()
         );
     }

@@ -33,9 +33,7 @@ public class BookingCacheService {
     public Booking save(Booking booking) {
         Booking record = bookingRepo.save(booking);
 
-        if (record.getStatus().equals(BookingStatus.BOOKED)) {
-            updateBookedBookingListByUserId(booking);
-        }
+        updateBookedBookingListByUserId(record);
 
         return record;
     }
