@@ -6,4 +6,5 @@ import org.codigo.middleware.mwbooking.entity.User;
 public interface WaitListService {
     void addUserToWaitlist(User user, Class_ classEntity);
     Long getUserIdFromWaitlist(Class_ classEntity);
+    void removeUserFromWaitlist(Long classId, Long userId);
 }

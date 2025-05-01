@@ -10,6 +10,7 @@ import org.codigo.middleware.mwbooking.repository.WaitListRepo;
 import org.codigo.middleware.mwbooking.service.WaitListService;
 import org.codigo.middleware.mwbooking.service.cache.WaitListCacheService;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @RequiredArgsConstructor
 @Service
@@ -41,6 +42,12 @@ public class WaitListServiceImpl implements WaitListService {
             return waitList.getUser().getUserId();
         }
         return waitlistEntry.getUserId();
+    }
+
+    @Override
+    @Transactional
+    public void removeUserFromWaitlist(Long classId, Long userId) {
+        waitListRepo.deleteByClassIdAndUserId(classId, userId);
     }
 }
 

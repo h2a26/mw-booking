@@ -251,6 +251,9 @@ public class BookingServiceImpl implements BookingService {
             Long candidateUserId = waitlistService.getUserIdFromWaitlist(class_e); // with FIFO logic
 
             if (candidateUserId == null) break;
+
+            waitlistService.removeUserFromWaitlist(class_e.getClassId(), candidateUserId);
+
             User candidate = userCacheService.getUserById(candidateUserId);
             try {
                 // Find a valid package for the candidate
@@ -266,7 +269,7 @@ public class BookingServiceImpl implements BookingService {
                     continue;
                 }
                 processBooking(candidate, class_e, validPackage.getUserPackageId());
-                class_e.setAvailableSlots(class_e.getAvailableSlots() - 1);
+                class_e.setAvailableSlots(class_e.getAvailableSlots() == 0 ? 0 : class_e.getAvailableSlots() - 1);
                 classCacheService.save(class_e);
             } catch (Exception ex) {
                 log.error("Failed to promote waitlist user: {}", ex.getMessage());

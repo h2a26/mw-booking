@@ -44,42 +44,27 @@ app:
       key: typ
 
   redis:
-    user_e:
-      key_prefix: "user:"
-      key_ttl: 15
     package_l:
       key_prefix: "available_packages_by_country:"
-      key_ttl: 15
-    user_package_e:
-      key_prefix: "user_package:"
-      key_ttl: 15
+      key_ttl: 1
     user_package_l:
       key_prefix: "user_purchased_package_by_user_id:"
-      key_ttl: 15
+      key_ttl: 1
     class_l:
       key_prefix: "available_classes_by_country:"
-      key_ttl: 15
+      key_ttl: 1
     classes_with_start_date:
       key_prefix: "classes_with_start_date:"
-      key_ttl: 15
+      key_ttl: 1
     classes_with_end_date:
       key_prefix: "classes_with_end_date:"
-      key_ttl: 15
+      key_ttl: 1
     user_waitlist_by_class_id:
       key_prefix: "user_waitlist_by_class_id:"
-      key_ttl: 15
-    booking_e:
-      key_prefix: "booking:"
-      key_ttl: 15
+      key_ttl: 1
     booked_booking_list_by_user_id:
       key_prefix: "booked_booking_list_by_user_id:"
-      key_ttl: 15
-    booking_detail_e:
-      key_prefix: "booking_detail:"
-      key_ttl: 15
+      key_ttl: 1
     booking_detail_l:
       key_prefix: "booking_details_by_booking_id:"
-      key_ttl: 15
-    refund_e:
-      key_prefix: "refund:"
-      key_ttl: 15
+      key_ttl: 1

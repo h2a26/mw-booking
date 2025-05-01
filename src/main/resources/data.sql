@@ -27,8 +27,8 @@ INSERT INTO packages (package_name, total_credits, price, expiry_days, country) 
 
 -- Inserting User Packages
 INSERT INTO user_packages (user_id, package_id, remaining_credits, status, expiration_date) VALUES
-    (1, 1, 10, 'ACTIVE', CURRENT_TIMESTAMP + INTERVAL '30 days'),
-    (2, 2, 20, 'ACTIVE', CURRENT_TIMESTAMP + INTERVAL '60 days');
+    (1, 3, 10, 'ACTIVE', CURRENT_TIMESTAMP + INTERVAL '30 days'),
+    (2, 3, 20, 'ACTIVE', CURRENT_TIMESTAMP + INTERVAL '60 days');
 
 
 -- Inserting Payments
@@ -38,21 +38,10 @@ INSERT INTO payments (user_id, amount, status) VALUES
 
 -- Inserting Businesses
 INSERT INTO business (business_name, country) VALUES
-    ('Fitness Studio', 'SG'),
-    ('Yoga Center', 'SG');
+    ('Yoga Center', 'SG'),
+    ('Fitness Studio', 'MM');
 
 -- Inserting Classes
 INSERT INTO classes (class_name, country, required_credits, available_slots, class_start_date, class_end_date, business_id) VALUES
     ('Yoga Beginner', 'SG', 5, 20, CURRENT_TIMESTAMP + INTERVAL '1 hour', CURRENT_TIMESTAMP + INTERVAL '7 day', 1),
-    ('Advanced Pilates', 'SG', 10, 10, CURRENT_TIMESTAMP + INTERVAL '2 hours', CURRENT_TIMESTAMP + INTERVAL '7 day', 2);
-
--- Inserting Bookings
-INSERT INTO bookings (user_id, class_id, booking_time, status) VALUES
-    (1, 1, CURRENT_TIMESTAMP, 'BOOKED');
-
-INSERT INTO bookings_detail (user_package_id, booking_id, credits_deducted) VALUES
-    (1, 1, 5);
-
--- Inserting Refunds
-INSERT INTO refunds (user_id, user_package_id, credit_refunded, reason) VALUES
-    (1, 1, 5, 'Cancellation');
+    ('Boxing', 'MM', 5, 1, CURRENT_TIMESTAMP + INTERVAL '2 hours', CURRENT_TIMESTAMP + INTERVAL '7 day', 2);
