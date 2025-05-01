@@ -20,14 +20,12 @@ import java.util.stream.Collectors;
 @Service
 public class PackageServiceImpl implements PackageService {
 
-    private final UserPackageRepo userPackageRepo;
     private final MockPaymentService mockPaymentService;
     private final PackageCacheService packageCacheService;
     private final UserPackageCacheService userPackageCacheService;
     private final UserCacheService userCacheService;
 
-    public PackageServiceImpl(UserPackageRepo userPackageRepo, MockPaymentService mockPaymentService, PackageCacheService packageCacheService, UserPackageCacheService userPackageCacheService, UserCacheService userCacheService) {
-        this.userPackageRepo = userPackageRepo;
+    public PackageServiceImpl(MockPaymentService mockPaymentService, PackageCacheService packageCacheService, UserPackageCacheService userPackageCacheService, UserCacheService userCacheService) {
         this.mockPaymentService = mockPaymentService;
         this.packageCacheService = packageCacheService;
         this.userPackageCacheService = userPackageCacheService;
@@ -59,20 +57,7 @@ public class PackageServiceImpl implements PackageService {
     public PurchasePackageResponse purchasePackage(PurchasePackageRequest purchasePackageRequest) {
         User user = userCacheService.getUser();
 
-        //Retrieve package by ID and check if it exists
         Package_ selectedPackage = packageCacheService.findById(purchasePackageRequest.packageId());
-
-        //Validate package country against user's country
-        if (!selectedPackage.getCountry().equals(user.getCountry())) {
-            throw new IllegalArgumentException("Package is not available for the user's country.");
-        }
-
-        //TODO: to refactor this db hit
-        boolean hasActivePackage = userPackageRepo.existsUserPackageByUser_UserIdAndPackageEntity_PackageIdAndStatus(user.getUserId(), purchasePackageRequest.packageId(), PackageStatus.ACTIVE);
-
-        if (hasActivePackage) {
-            throw new IllegalStateException("User already has an active package of this type.");
-        }
 
         mockPaymentService.paymentCharge(selectedPackage, user);
 
@@ -89,8 +74,8 @@ public class PackageServiceImpl implements PackageService {
 
 
     @Override
-    public List<UserPackageResponse> getPurchasedPackagesByUserIdAndCountry(Long userId, String country) {
-        List<UserPackage> userPackageList = userPackageCacheService.findUserPackagesByUserIdAndCountry(userId, country);
+    public List<UserPackageResponse> getPurchasedPackagesByUserIdAndCountry(Long userId) {
+        List<UserPackage> userPackageList = userPackageCacheService.findUserPackagesByUserIdAndCountry(userId);
         return userPackageList.stream()
                 .map(UserPackageResponse::from)
                 .collect(Collectors.toList());

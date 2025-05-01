@@ -12,7 +12,7 @@ import java.util.List;
 
 @Repository
 public interface UserPackageRepo extends JpaRepository<UserPackage, Long> {
-    List<UserPackage> findAllByUser_UserIdAndUser_Country(Long userId, String country);
+    List<UserPackage> findAllByUser_UserId(Long userId);
     boolean existsUserPackageByUser_UserIdAndPackageEntity_PackageIdAndStatus(Long userId, Long packageId, PackageStatus status);
 
     @Modifying

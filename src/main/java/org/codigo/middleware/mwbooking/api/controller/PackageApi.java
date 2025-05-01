@@ -41,8 +41,8 @@ public class PackageApi {
     }
 
     @GetMapping("/purchased-packages")
-    public ResponseEntity<ApiResponse<List<UserPackageResponse>>> getUserPurchasedPackages(@RequestParam Long userId, @RequestParam String country) {
-        List<UserPackageResponse> userPurchasedPackages = packageService.getPurchasedPackagesByUserIdAndCountry(userId, country);
+    public ResponseEntity<ApiResponse<List<UserPackageResponse>>> getUserPurchasedPackages(@RequestParam Long userId) {
+        List<UserPackageResponse> userPurchasedPackages = packageService.getPurchasedPackagesByUserIdAndCountry(userId);
         return ApiResponse.of(userPurchasedPackages);
     }
 }

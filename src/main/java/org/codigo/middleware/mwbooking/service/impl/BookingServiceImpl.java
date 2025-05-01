@@ -89,7 +89,7 @@ public class BookingServiceImpl implements BookingService {
 
     private Booking processBooking(User user, Class_ class_e) {
         try (BookingLockService.AutoLock lock = bookingLockService.lockForBooking(user.getUserId(), class_e.getClassId())) {
-            List<UserPackage> userPackageList = userPackageCacheService.findUserPackagesByUserIdAndCountry(user.getUserId(), user.getCountry());
+            List<UserPackage> userPackageList = userPackageCacheService.findUserPackagesByUserIdAndCountry(user.getUserId());
             validateSufficientCredits(class_e, userPackageList);
             return deductCredits(user, class_e, userPackageList);
         } catch (BookingConcurrencyException | InterruptedException e) {

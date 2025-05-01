@@ -64,7 +64,7 @@ public class PackageCacheService {
         return recordList;
     }
 
-    private List<Package_> update_available_package_list_by_country(Package_ package_e) {
+    private void update_available_package_list_by_country(Package_ package_e) {
         String key = package_l_key_prefix + package_e.getCountry();
         List<Package_> recordList = redisUtil.getList(key, Package_.class);
 
@@ -77,7 +77,6 @@ public class PackageCacheService {
         updatedList.add(package_e);
         setList(key, updatedList);
 
-        return updatedList;
     }
 
     private void set(String key, Package_ package_e) {

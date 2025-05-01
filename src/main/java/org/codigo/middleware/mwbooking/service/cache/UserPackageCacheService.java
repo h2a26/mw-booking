@@ -36,38 +36,35 @@ public class UserPackageCacheService {
         String key = user_package_e_key_prefix + record.getUserPackageId();
         set(key, record);
 
-        update_user_package_list(record);
+        update_user_package_list_cache(record);
 
         return record;
     }
 
-    public List<UserPackage> findUserPackagesByUserIdAndCountry(Long userId, String userCountry) {
-        String key = user_package_l_key_prefix + userId + ":" + userCountry;
+    public List<UserPackage> findUserPackagesByUserIdAndCountry(Long userId) {
+        String key = user_package_l_key_prefix + userId;
         List<UserPackage> recordList = redisUtil.getList(key, UserPackage.class);
 
         if (recordList.isEmpty()) {
-            recordList = userPackageRepo.findAllByUser_UserIdAndUser_Country(userId, userCountry);
+            recordList = userPackageRepo.findAllByUser_UserId(userId);
             setList(key, recordList);
         }
         return recordList;
     }
 
-    private List<UserPackage> update_user_package_list(UserPackage userPackage) {
+    private void update_user_package_list_cache(UserPackage userPackage) {
         Long userId = userPackage.getUser().getUserId();
-        String userCountry = userPackage.getUser().getCountry();
-        String key = user_package_l_key_prefix + userId + ":" + userCountry;
+        String key = user_package_l_key_prefix + userId;
         List<UserPackage> recordList = redisUtil.getList(key, UserPackage.class);
 
         if (recordList.isEmpty()) {
             //will invoke db hit only once to consistence with db if redis key is deleted
-            recordList = userPackageRepo.findAllByUser_UserIdAndUser_Country(userId, userCountry);
+            recordList = userPackageRepo.findAllByUser_UserId(userId);
         }
         List<UserPackage> updatedList = recordList.stream().filter(record -> !record.getUserPackageId().equals(userPackage.getUserPackageId())).collect(Collectors.toList());
 
         updatedList.add(userPackage);
         setList(key, updatedList);
-
-        return updatedList;
     }
 
     private void set(String key, UserPackage userPackage) {
