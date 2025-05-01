@@ -147,16 +147,7 @@ public class BookingServiceImpl implements BookingService {
         return CancelBookingResponse.from(booking);
     }
 
-    private void addWaitlistUserAsBookedAs(Class_ class_e) {
-        while (class_e.getAvailableSlots() > 0) {
-            log.info("Class_ {} available slots: {}", class_e.getClassId(), class_e.getAvailableSlots());
-            WaitlistEntry waitlistEntry = waitlistCacheService.getFromWaitlist(class_e.getClassId());
-            if (waitlistEntry == null) break;
-            User candidate = userCacheService.getUser(waitlistEntry.getEmail());
-            //TODO: handle this method for selected package id
-            processBooking(candidate, class_e, 0);
-        }
-    }
+
 
     private Booking deductCredits(User user, Class_ class_e, UserPackage selectedPackage) {
         boolean isWaitlist = false;

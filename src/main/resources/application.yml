@@ -59,9 +59,6 @@ app:
     user_package_l:
       key_prefix: "user_purchased_package_by_user_id:"
       key_ttl: 15
-    class_e:
-      key_prefix: "class:"
-      key_ttl: 15
     class_l:
       key_prefix: "available_classes_by_country:"
       key_ttl: 15

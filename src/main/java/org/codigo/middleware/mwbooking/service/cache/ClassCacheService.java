@@ -22,11 +22,6 @@ public class ClassCacheService {
         this.redisUtil = redisUtil;
     }
 
-    @Value("${app.redis.class_e.key_prefix}")
-    private String class_e_key_prefix;
-    @Value("${app.redis.class_e.key_ttl}")
-    private long class_e_key_ttl;
-
     @Value("${app.redis.class_l.key_prefix}")
     private String class_l_key_prefix;
     @Value("${app.redis.class_l.key_ttl}")
@@ -45,9 +40,6 @@ public class ClassCacheService {
     public Class_ save(Class_ clazz) {
         Class_ record = classRepo.save(clazz);
 
-        String key = class_e_key_prefix + record.getClassId();
-        set(key, record);
-
         zSetAddForClassStartDate(record);
         zSetAddForClassEndDate( record);
 
@@ -57,14 +49,7 @@ public class ClassCacheService {
     }
 
     public Class_ findById(Long classId) {
-        String key = class_e_key_prefix + classId;
-        Class_ record = redisUtil.getHash(key, Class_.class);
-
-        if (record == null) {
-            record = classRepo.findByClassId(classId);
-            set(key, record);
-        }
-        return record;
+        return classRepo.findByClassId(classId);
     }
 
     public List<Class_> findAllByCountry(String classCountry) {
@@ -93,10 +78,6 @@ public class ClassCacheService {
         updatedList.add(clazz);
         setList(key, updatedList);
 
-    }
-
-    private void set(String key, Class_ classEntity) {
-        redisUtil.setHash(key, classEntity, class_e_key_ttl, TimeUnit.MINUTES);
     }
 
     private void setList(String key, List<Class_> classList) {
