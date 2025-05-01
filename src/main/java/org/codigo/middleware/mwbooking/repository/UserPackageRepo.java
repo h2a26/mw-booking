@@ -1,6 +1,7 @@
 package org.codigo.middleware.mwbooking.repository;
 
 import org.codigo.middleware.mwbooking.commons.enum_.PackageStatus;
+import org.codigo.middleware.mwbooking.entity.Booking;
 import org.codigo.middleware.mwbooking.entity.UserPackage;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -22,4 +23,8 @@ public interface UserPackageRepo extends JpaRepository<UserPackage, Long> {
             "AND expiration_date < :currentDate",
             nativeQuery = true)
     int updateExpiredPackages(ZonedDateTime currentDate);
+
+    default UserPackage findByUserPackageId(long userPackageId) {
+        return findById(userPackageId).orElseThrow(() -> new IllegalArgumentException("UserPackage not found by userPackageId: " + userPackageId));
+    }
 }

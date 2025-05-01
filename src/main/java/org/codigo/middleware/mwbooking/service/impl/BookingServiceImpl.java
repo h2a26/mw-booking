@@ -59,7 +59,7 @@ public class BookingServiceImpl implements BookingService {
 
         validateOverlapClassTime(class_e);
 
-        Booking booking = processBooking(user, class_e);
+        Booking booking = processBooking(user, class_e, bookingClassRequest.userPackageId());
         return BookingResponse.from(booking);
     }
 
@@ -87,11 +87,11 @@ public class BookingServiceImpl implements BookingService {
                 && (requestClassStartDate.isBefore(classEndDate) || requestClassStartDate.isEqual(classEndDate));
     }
 
-    private Booking processBooking(User user, Class_ class_e) {
+    private Booking processBooking(User user, Class_ class_e, long selectedUserPackageId) {
         try (BookingLockService.AutoLock lock = bookingLockService.lockForBooking(user.getUserId(), class_e.getClassId())) {
-            List<UserPackage> userPackageList = userPackageCacheService.findUserPackagesByUserIdAndCountry(user.getUserId());
-            validateSufficientCredits(class_e, userPackageList);
-            return deductCredits(user, class_e, userPackageList);
+            UserPackage userPackage = userPackageCacheService.findByUserPackageId(selectedUserPackageId);
+            validateSelectedPackage(user, class_e, userPackage);
+            return deductCredits(user, class_e, userPackage);
         } catch (BookingConcurrencyException | InterruptedException e) {
             throw new BookingConcurrencyException("Failed to complete booking due to high demand. Please try again.", e);
         }
@@ -153,27 +153,24 @@ public class BookingServiceImpl implements BookingService {
             WaitlistEntry waitlistEntry = waitlistCacheService.getFromWaitlist(class_e.getClassId());
             if (waitlistEntry == null) break;
             User candidate = userCacheService.getUser(waitlistEntry.getEmail());
-            processBooking(candidate, class_e);
+            //TODO: handle this method for selected package id
+            processBooking(candidate, class_e, 0);
         }
     }
 
-    private Booking deductCredits(User user, Class_ class_e, List<UserPackage> userPackageList) {
+    private Booking deductCredits(User user, Class_ class_e, UserPackage selectedPackage) {
         boolean isWaitlist = false;
-        int availableSlots = class_e.getAvailableSlots();
-        if (availableSlots == 0) {
+
+        if (class_e.getAvailableSlots() == 0) {
             isWaitlist = true;
             waitlistCacheService.addToWaitlist(user, class_e);
         } else {
-            class_e.setAvailableSlots(availableSlots - 1);
+            class_e.setAvailableSlots(class_e.getAvailableSlots() - 1);
         }
 
-        int totalCreditsToDeduct = class_e.getRequiredCredits();
+        int requiredCredits = class_e.getRequiredCredits();
 
-        List<UserPackage> eligiblePackages = userPackageList.stream()
-                .filter(pkg -> pkg.getPackageEntity().getCountry().equals(class_e.getCountry()))
-                .filter(pkg -> pkg.getStatus() == PackageStatus.ACTIVE && pkg.getRemainingCredits() > 0)
-                .sorted(Comparator.comparing(UserPackage::getExpirationDate))
-                .toList();
+        selectedPackage.setRemainingCredits(selectedPackage.getRemainingCredits() - requiredCredits);
 
         Booking booking = Booking.builder()
                 .user(user)
@@ -184,51 +181,39 @@ public class BookingServiceImpl implements BookingService {
                 .build();
 
         classCacheService.save(class_e);
-        bookingCacheService.save(booking);
+        Booking savedBooking = bookingCacheService.save(booking);
 
-        for (UserPackage userPackage : eligiblePackages) {
-            if (totalCreditsToDeduct <= 0) break;
+        BookingDetail detail = BookingDetail.builder()
+                .booking(savedBooking)
+                .userPackage(selectedPackage)
+                .creditsDeducted(requiredCredits)
+                .build();
 
-            int creditsBalanceFromPackage = userPackage.getRemainingCredits();
-            int creditsToDeductFromThisPackage = Math.min(totalCreditsToDeduct, creditsBalanceFromPackage);
+        userPackageCacheService.save(selectedPackage);
+        bookingDetailCacheService.save(detail);
 
-            // Deduct credits from this package
-            userPackage.setRemainingCredits(creditsBalanceFromPackage - creditsToDeductFromThisPackage);
-            totalCreditsToDeduct -= creditsToDeductFromThisPackage;
-
-            // Record deduction in BookingDetail
-            BookingDetail detail = BookingDetail.builder()
-                    .booking(booking)
-                    .userPackage(userPackage)
-                    .creditsDeducted(creditsToDeductFromThisPackage)
-                    .build();
-            userPackageCacheService.save(userPackage);
-            bookingDetailCacheService.save(detail);
-        }
         return booking;
     }
 
-    private void validateSufficientCredits(Class_ classEntity, List<UserPackage> userPackages) {
-
-        String classCountry = classEntity.getCountry();
-        int requiredCredits = classEntity.getRequiredCredits();
-
-        // Filter only active packages for the class's country
-        List<UserPackage> eligiblePackages = userPackages.stream()
-                .filter(pkg -> pkg.getStatus() == PackageStatus.ACTIVE && pkg.getRemainingCredits() > 0)
-                .filter(pkg -> pkg.getPackageEntity().getCountry().equals(classCountry))
-                .toList();
-
-        if (eligiblePackages.isEmpty()) {
-            throw new InvalidPackageCountryException("No active package found for country: " + classCountry);
+    private void validateSelectedPackage(User user, Class_ classEntity, UserPackage selectedPackage) {
+        if (!selectedPackage.getUser().getUserId().equals(user.getUserId())) {
+            throw new ApiBusinessException("Package does not belong to current user.");
         }
 
-        int totalEligibleBalanceCredits = eligiblePackages.stream()
-                .mapToInt(UserPackage::getRemainingCredits)
-                .sum();
+        if (!selectedPackage.getPackageEntity().getCountry().equals(classEntity.getCountry())) {
+            throw new InvalidPackageCountryException("Package country does not match class country.");
+        }
 
-        if (totalEligibleBalanceCredits < requiredCredits) {
-            throw new InsufficientCreditsException("Insufficient credits: class ID " + classEntity.getClassId() + " requires " + classEntity.getRequiredCredits() + " credits.");
+        if (selectedPackage.getStatus() != PackageStatus.ACTIVE) {
+            throw new ApiBusinessException("Selected package is not active.");
+        }
+
+        if (selectedPackage.getRemainingCredits() < classEntity.getRequiredCredits()) {
+            throw new InsufficientCreditsException("Not enough credits in the selected package.");
+        }
+
+        if (selectedPackage.getExpirationDate().isBefore(ZonedDateTime.now())) {
+            throw new ApiBusinessException("Selected package is expired.");
         }
     }
 }

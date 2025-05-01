@@ -41,7 +41,7 @@ public class UserPackageCacheService {
         return record;
     }
 
-    public List<UserPackage> findUserPackagesByUserIdAndCountry(Long userId) {
+    public List<UserPackage> findUserPackagesByUserId(Long userId) {
         String key = user_package_l_key_prefix + userId;
         List<UserPackage> recordList = redisUtil.getList(key, UserPackage.class);
 
@@ -50,6 +50,10 @@ public class UserPackageCacheService {
             setList(key, recordList);
         }
         return recordList;
+    }
+
+    public UserPackage findByUserPackageId(Long userId) {
+        return userPackageRepo.findByUserPackageId(userId);
     }
 
     private void update_user_package_list_cache(UserPackage userPackage) {

@@ -34,23 +34,13 @@ public class PackageCacheService {
     public Package_ save(Package_ package_e) {
         Package_ record = packageRepo.save(package_e);
 
-        String key = package_e_key_prefix + record.getPackageId();
-        set(key, record);
-
         update_available_package_list_by_country(record);
 
         return record;
     }
 
     public Package_ findById(long packageId) {
-        String key = package_e_key_prefix + packageId;
-        Package_ record = redisUtil.getHash(key, Package_.class);
-
-        if (record == null) {
-            record = packageRepo.findByPackageId(packageId);
-            set(key, record);
-        }
-        return record;
+        return packageRepo.findByPackageId(packageId);
     }
 
     public List<Package_> findAllByCountry(String country) {

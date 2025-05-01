@@ -6,7 +6,6 @@ import org.codigo.middleware.mwbooking.commons.enum_.PackageStatus;
 import org.codigo.middleware.mwbooking.entity.Package_;
 import org.codigo.middleware.mwbooking.entity.User;
 import org.codigo.middleware.mwbooking.entity.UserPackage;
-import org.codigo.middleware.mwbooking.repository.UserPackageRepo;
 import org.codigo.middleware.mwbooking.service.PackageService;
 import org.codigo.middleware.mwbooking.service.cache.PackageCacheService;
 import org.codigo.middleware.mwbooking.service.cache.UserCacheService;
@@ -75,7 +74,7 @@ public class PackageServiceImpl implements PackageService {
 
     @Override
     public List<UserPackageResponse> getPurchasedPackagesByUserIdAndCountry(Long userId) {
-        List<UserPackage> userPackageList = userPackageCacheService.findUserPackagesByUserIdAndCountry(userId);
+        List<UserPackage> userPackageList = userPackageCacheService.findUserPackagesByUserId(userId);
         return userPackageList.stream()
                 .map(UserPackageResponse::from)
                 .collect(Collectors.toList());

@@ -4,6 +4,8 @@ import jakarta.validation.constraints.NotNull;
 
 public record BookingClassRequest(
         @NotNull(message = "Please enter class id.")
-        Long classId
+        Long classId,
+        @NotNull(message = "Please enter eligible purchased package id.")
+        Long userPackageId
 ) {
 }

@@ -172,7 +172,12 @@ CREATE TABLE IF NOT EXISTS bookings_detail (
     booking_detail_id SERIAL PRIMARY KEY,
     user_package_id INT NOT NULL REFERENCES user_packages(user_package_id) ON DELETE CASCADE,
     booking_id INT NOT NULL REFERENCES bookings(booking_id) ON DELETE CASCADE,
-    credits_deducted INT NOT NULL
+    credits_deducted INT NOT NULL,
+    created_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,
+    created_by VARCHAR(255) DEFAULT 'System',
+    updated_by VARCHAR(255) DEFAULT 'System',
+    version BIGINT DEFAULT 0 NOT NULL
 );
 
 -- Indexes for performance on booking queries
