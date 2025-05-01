@@ -17,7 +17,7 @@ public record ClassRegisterRequest(
         @Min(value = 1, message = "Available Slots must be greater than 1.")
         int availableSlots,
         @NotNull(message = "Please provide the class date.")
-        @FutureOrPresent(message = "Class_ date must be in the present or future.")
+        @FutureOrPresent(message = "Class date must be in the present or future.")
         @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ssXXX") // ISO 8601 format with timezone offset
         ZonedDateTime classStartDate,
         ZonedDateTime classEndDate,

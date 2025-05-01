@@ -1,4 +1,5 @@
-DROP TABLE IF EXISTS users, packages, user_packages, classes, bookings, waitlists, refunds, payments, business CASCADE;
+DROP TABLE IF EXISTS users, roles, permissions, user_roles, role_permissions, packages, user_packages, payments, business, classes, bookings, bookings_detail,
+refunds CASCADE;
 
 
 -- Users Table

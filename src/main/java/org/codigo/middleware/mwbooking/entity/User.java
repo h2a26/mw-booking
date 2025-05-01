@@ -27,7 +27,7 @@ public class User extends AuditableEntity {
     private boolean isVerified;
 
     @Builder.Default
-    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToMany(cascade = CascadeType.MERGE)
     @JoinTable(
             name = "user_roles",
             joinColumns = @JoinColumn(name = "user_id"),
