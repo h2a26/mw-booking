@@ -209,7 +209,7 @@ CREATE INDEX IF NOT EXISTS idx_refunds_user_package_id ON refunds(user_package_i
 CREATE TABLE IF NOT EXISTS waitlists (
     waitlist_id SERIAL PRIMARY KEY,
     waitlist_position INT NOT NULL,
-    status VARCHAR(50) NOT NULL,
+    booking_id INT UNIQUE REFERENCES bookings(booking_id) ON DELETE SET NULL,
     class_id INT NOT NULL REFERENCES classes(class_id) ON DELETE CASCADE,
     user_id INT NOT NULL REFERENCES users(user_id) ON DELETE CASCADE,
     created_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,

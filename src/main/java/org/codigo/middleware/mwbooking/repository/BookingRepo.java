@@ -11,6 +11,7 @@ import java.util.List;
 public interface BookingRepo extends JpaRepository<Booking, Long> {
     List<Booking> findAllByUser_UserIdAndStatus(Long userId, BookingStatus status);
     List<Booking> findAllByClassEntity_ClassIdAndStatus(Long classId, BookingStatus status);
+
     default Booking findByBookingId(long id) {
         return findById(id).orElseThrow(() -> new IllegalArgumentException("Booking not found by id: " + id));
     }

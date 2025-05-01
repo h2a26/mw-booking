@@ -3,11 +3,11 @@ package org.codigo.middleware.mwbooking.service.impl;
 import lombok.extern.slf4j.Slf4j;
 import org.codigo.middleware.mwbooking.api.input.booking.*;
 import org.codigo.middleware.mwbooking.api.input.class_.*;
-import org.codigo.middleware.mwbooking.api.input.waitlist.WaitlistEntry;
 import org.codigo.middleware.mwbooking.api.output.booking.*;
 import org.codigo.middleware.mwbooking.commons.enum_.*;
 import org.codigo.middleware.mwbooking.entity.*;
 import org.codigo.middleware.mwbooking.exceptions.*;
+import org.codigo.middleware.mwbooking.repository.BookingRepo;
 import org.codigo.middleware.mwbooking.service.*;
 import org.codigo.middleware.mwbooking.service.cache.*;
 import org.springframework.stereotype.Service;
@@ -25,18 +25,16 @@ public class BookingServiceImpl implements BookingService {
     private final BookingLockService bookingLockService;
     private final UserPackageCacheService userPackageCacheService;
     private final ClassCacheService classCacheService;
-    private final WaitListCacheService waitlistCacheService;
     private final RefundCacheService refundCacheService;
     private final WaitListService waitlistService;
 
-    public BookingServiceImpl(UserCacheService userCacheService, BookingCacheService bookingCacheService, BookingDetailCacheService bookingDetailCacheService, BookingLockService bookingLockService, UserPackageCacheService userPackageCacheService, ClassCacheService classCacheService, WaitListCacheService waitlistCacheService, RefundCacheService refundCacheService, WaitListService waitlistService) {
+    public BookingServiceImpl(UserCacheService userCacheService, BookingCacheService bookingCacheService, BookingDetailCacheService bookingDetailCacheService, BookingLockService bookingLockService, UserPackageCacheService userPackageCacheService, ClassCacheService classCacheService, RefundCacheService refundCacheService, WaitListService waitlistService, BookingRepo bookingRepo) {
         this.userCacheService = userCacheService;
         this.bookingCacheService = bookingCacheService;
         this.bookingDetailCacheService = bookingDetailCacheService;
         this.bookingLockService = bookingLockService;
         this.userPackageCacheService = userPackageCacheService;
         this.classCacheService = classCacheService;
-        this.waitlistCacheService = waitlistCacheService;
         this.refundCacheService = refundCacheService;
         this.waitlistService = waitlistService;
     }
@@ -157,8 +155,9 @@ public class BookingServiceImpl implements BookingService {
     }
 
     private Booking doAddWaitlist(User user, Class_ classEntity, long packageId) {
-        waitlistService.addUserToWaitlist(user, classEntity);
-        return doNormalBooking(user, classEntity, packageId, BookingStatus.WAITLISTED);
+        Booking savedBooking = doNormalBooking(user, classEntity, packageId, BookingStatus.WAITLISTED);
+        waitlistService.addUserToWaitlist(user, classEntity, savedBooking);
+        return savedBooking;
     }
 
     private Booking doNormalBooking(User user, Class_ classEntity, long packageId, BookingStatus bookingStatus) {
@@ -211,12 +210,10 @@ public class BookingServiceImpl implements BookingService {
     }
 
 
-
-    private void processBooking(User user, Class_ class_e, long selectedUserPackageId) {
+    private void processBooking(User user, Class_ class_e, UserPackage validPackage, Booking booking) {
         try (BookingLockService.AutoLock lock = bookingLockService.lockForBooking(user.getUserId(), class_e.getClassId())) {
-            UserPackage userPackage = userPackageCacheService.findByUserPackageId(selectedUserPackageId);
-            validateSelectedPackage(user, class_e, userPackage);
-            deductCredits(user, class_e, userPackage);
+            validateSelectedPackage(user, class_e, validPackage);
+            deductCredits(user, class_e, validPackage, booking);
         } catch (BookingConcurrencyException | InterruptedException e) {
             throw new BookingConcurrencyException("Failed to complete booking due to high demand. Please try again.", e);
         }
@@ -248,13 +245,13 @@ public class BookingServiceImpl implements BookingService {
      */
     private void promoteWaitlistIfPossible(Class_ class_e) {
         while (class_e.getAvailableSlots() > 0) {
-            Long candidateUserId = waitlistService.getUserIdFromWaitlist(class_e); // with FIFO logic
+            WaitList candidateUserToBook = waitlistService.getUserIdFromWaitlist(class_e); // with FIFO logic
 
-            if (candidateUserId == null) break;
+            if (candidateUserToBook == null) break;
 
-            waitlistService.removeUserFromWaitlist(class_e.getClassId(), candidateUserId);
+            waitlistService.removeUserFromWaitlist(class_e.getClassId(), candidateUserToBook.getUser().getUserId());
 
-            User candidate = userCacheService.getUserById(candidateUserId);
+            User candidate = candidateUserToBook.getUser();
             try {
                 // Find a valid package for the candidate
                 List<UserPackage> packages = userPackageCacheService.findUserPackagesByUserId(candidate.getUserId());
@@ -268,7 +265,7 @@ public class BookingServiceImpl implements BookingService {
                     log.info("No valid package found for waitlist user {} for class {}", candidate.getUserId(), class_e.getClassId());
                     continue;
                 }
-                processBooking(candidate, class_e, validPackage.getUserPackageId());
+                processBooking(candidate, class_e, validPackage, candidateUserToBook.getBooking());
                 class_e.setAvailableSlots(class_e.getAvailableSlots() == 0 ? 0 : class_e.getAvailableSlots() - 1);
                 classCacheService.save(class_e);
             } catch (Exception ex) {
@@ -278,27 +275,14 @@ public class BookingServiceImpl implements BookingService {
     }
 
 
-    private void deductCredits(User user, Class_ class_e, UserPackage selectedPackage) {
-        boolean isWaitlist = false;
-
-        if (class_e.getAvailableSlots() == 0) {
-            isWaitlist = true;
-            waitlistCacheService.addToWaitlist(user, class_e);
-        } else {
-            class_e.setAvailableSlots(class_e.getAvailableSlots() - 1);
-        }
+    private void deductCredits(User user, Class_ class_e, UserPackage selectedPackage, Booking booking) {
+        class_e.setAvailableSlots(class_e.getAvailableSlots() - 1);
 
         int requiredCredits = class_e.getRequiredCredits();
 
         selectedPackage.setRemainingCredits(selectedPackage.getRemainingCredits() - requiredCredits);
-
-        Booking booking = Booking.builder()
-                .user(user)
-                .classEntity(class_e)
-                .bookingTime(ZonedDateTime.now())
-                .status(isWaitlist ? BookingStatus.WAITLISTED : BookingStatus.BOOKED)
-                .isCanceled(false)
-                .build();
+        booking.setStatus(BookingStatus.BOOKED);
+        booking.setBookingTime(ZonedDateTime.now());
 
         classCacheService.save(class_e);
         Booking savedBooking = bookingCacheService.save(booking);

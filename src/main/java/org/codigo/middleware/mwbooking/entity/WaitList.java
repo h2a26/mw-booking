@@ -16,7 +16,10 @@ public class WaitList extends AuditableEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long waitlistId;
     private int waitlistPosition;
-    private String status;
+
+    @OneToOne
+    @JoinColumn(name = "booking_id", unique = true)
+    private Booking booking;
 
     @ManyToOne
     @JoinColumn(name = "class_id", nullable = false)

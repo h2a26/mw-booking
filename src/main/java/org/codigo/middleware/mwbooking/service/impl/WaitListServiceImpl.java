@@ -2,7 +2,7 @@ package org.codigo.middleware.mwbooking.service.impl;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.codigo.middleware.mwbooking.api.input.waitlist.WaitlistEntry;
+import org.codigo.middleware.mwbooking.entity.Booking;
 import org.codigo.middleware.mwbooking.entity.Class_;
 import org.codigo.middleware.mwbooking.entity.User;
 import org.codigo.middleware.mwbooking.entity.WaitList;
@@ -21,27 +21,25 @@ public class WaitListServiceImpl implements WaitListService {
     private final WaitListCacheService waitListCacheService;
 
     @Override
-    public void addUserToWaitlist(User user, Class_ classEntity) {
+    public void addUserToWaitlist(User user, Class_ classEntity, Booking booking) {
         int position = waitListRepo.countByClass_(classEntity) + 1;
         WaitList waitList = WaitList.builder()
                 .user(user)
                 .clazz(classEntity)
+                .booking(booking)
                 .waitlistPosition(position)
-                .status("WAITLISTED")
                 .build();
-        waitListRepo.save(waitList);
-
-        waitListCacheService.addToWaitlist(user, classEntity);
+        WaitList saved = waitListRepo.save(waitList);
+        waitListCacheService.addToWaitlist(saved);
     }
 
-    public Long getUserIdFromWaitlist(Class_ classEntity) {
-        WaitlistEntry waitlistEntry = waitListCacheService.getFromWaitlist(classEntity.getClassId());
+    public WaitList getUserIdFromWaitlist(Class_ classEntity) {
+        WaitList waitListFromCache = waitListCacheService.getFromWaitlist(classEntity.getClassId());
 
-        if (waitlistEntry == null) {
-            WaitList waitList = waitListRepo.findFirstByClazzOrderByWaitlistPositionAsc(classEntity);
-            return waitList.getUser().getUserId();
+        if (waitListFromCache == null) {
+            return waitListRepo.findFirstByClazzOrderByWaitlistPositionAsc(classEntity);
         }
-        return waitlistEntry.getUserId();
+        return waitListFromCache;
     }
 
     @Override
