@@ -1,8 +1,8 @@
 package org.codigo.middleware.mwbooking.service.cache;
 
+import org.codigo.middleware.mwbooking.entity.Package_;
 import org.codigo.middleware.mwbooking.repository.PackageRepo;
 import org.codigo.middleware.mwbooking.utils.RedisUtil;
-import org.codigo.middleware.mwbooking.entity.Package;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -31,8 +31,8 @@ public class PackageCacheService {
     @Value("${app.redis.package_l.key_ttl}")
     private long package_l_key_ttl;
 
-    public Package save(Package package_e) {
-        Package record = packageRepo.save(package_e);
+    public Package_ save(Package_ package_e) {
+        Package_ record = packageRepo.save(package_e);
 
         String key = package_e_key_prefix + record.getPackageId();
         set(key, record);
@@ -42,9 +42,9 @@ public class PackageCacheService {
         return record;
     }
 
-    public Package findById(long packageId) {
+    public Package_ findById(long packageId) {
         String key = package_e_key_prefix + packageId;
-        Package record = redisUtil.getHash(key, Package.class);
+        Package_ record = redisUtil.getHash(key, Package_.class);
 
         if (record == null) {
             record = packageRepo.findByPackageId(packageId);
@@ -53,9 +53,9 @@ public class PackageCacheService {
         return record;
     }
 
-    public List<Package> findAllByCountry(String country) {
+    public List<Package_> findAllByCountry(String country) {
         String key = package_l_key_prefix + country;
-        List<Package> recordList = redisUtil.getList(key, Package.class);
+        List<Package_> recordList = redisUtil.getList(key, Package_.class);
 
         if (recordList.isEmpty()) {
             recordList = packageRepo.findAllByCountry(country);
@@ -64,15 +64,15 @@ public class PackageCacheService {
         return recordList;
     }
 
-    private List<Package> update_available_package_list_by_country(Package package_e) {
+    private List<Package_> update_available_package_list_by_country(Package_ package_e) {
         String key = package_l_key_prefix + package_e.getCountry();
-        List<Package> recordList = redisUtil.getList(key, Package.class);
+        List<Package_> recordList = redisUtil.getList(key, Package_.class);
 
         if (recordList.isEmpty()) {
             //will invoke db hit only once to consistence with db if redis key is deleted
             recordList = packageRepo.findAllByCountry(package_e.getCountry());
         }
-        List<Package> updatedList = recordList.stream().filter(record -> !record.getPackageId().equals(package_e.getPackageId())).collect(Collectors.toList());
+        List<Package_> updatedList = recordList.stream().filter(record -> !record.getPackageId().equals(package_e.getPackageId())).collect(Collectors.toList());
 
         updatedList.add(package_e);
         setList(key, updatedList);
@@ -80,11 +80,11 @@ public class PackageCacheService {
         return updatedList;
     }
 
-    private void set(String key, Package package_e) {
+    private void set(String key, Package_ package_e) {
         redisUtil.setHash(key, package_e, package_e_key_ttl, TimeUnit.MINUTES);
     }
 
-    private void setList(String key, List<Package> packageList) {
+    private void setList(String key, List<Package_> packageList) {
         redisUtil.setList(key, packageList, package_l_key_ttl, TimeUnit.MINUTES);
     }
 }

@@ -34,7 +34,7 @@ logging:
 app:
   token:
     secret: CJxD7RA0InBYKIAyyq0LdgyqUFS4vXNkntiGvnjNe2Nkpzfe1PGdyISMDfMmxtxFc5yE7zBOjLBA/kKdoLEd0Q==
-    issuer: org.mw.mwws
+    issuer: org.codigo.mwbooking
     expiration:
       access: 5
       refresh: 1500
@@ -58,4 +58,34 @@ app:
       key_ttl: 15
     user_package_l:
       key_prefix: "user_purchased_package_by_user_id:user_country:"
+      key_ttl: 15
+    class_e:
+      key_prefix: "class:"
+      key_ttl: 15
+    class_l:
+      key_prefix: "available_classes_by_country:"
+      key_ttl: 15
+    classes_with_start_date:
+      key_prefix: "classes_with_start_date:"
+      key_ttl: 15
+    classes_with_end_date:
+      key_prefix: "classes_with_end_date:"
+      key_ttl: 15
+    user_waitlist_by_class_id:
+      key_prefix: "user_waitlist_by_class_id:"
+      key_ttl: 15
+    booking_e:
+      key_prefix: "booking:"
+      key_ttl: 15
+    booked_booking_list_by_user_id:
+      key_prefix: "booked_booking_list_by_user_id:"
+      key_ttl: 15
+    booking_detail_e:
+      key_prefix: "booking_detail:"
+      key_ttl: 15
+    booking_detail_l:
+      key_prefix: "booking_details_by_booking_id:"
+      key_ttl: 15
+    refund_e:
+      key_prefix: "refund:"
       key_ttl: 15

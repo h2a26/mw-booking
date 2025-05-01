@@ -3,6 +3,7 @@ package org.codigo.middleware.mwbooking.service.impl;
 import org.codigo.middleware.mwbooking.api.input.package_.*;
 import org.codigo.middleware.mwbooking.api.output.package_.*;
 import org.codigo.middleware.mwbooking.commons.enum_.PackageStatus;
+import org.codigo.middleware.mwbooking.entity.Package_;
 import org.codigo.middleware.mwbooking.entity.User;
 import org.codigo.middleware.mwbooking.entity.UserPackage;
 import org.codigo.middleware.mwbooking.repository.UserPackageRepo;
@@ -11,7 +12,6 @@ import org.codigo.middleware.mwbooking.service.cache.PackageCacheService;
 import org.codigo.middleware.mwbooking.service.cache.UserCacheService;
 import org.codigo.middleware.mwbooking.service.cache.UserPackageCacheService;
 import org.springframework.stereotype.Service;
-import org.codigo.middleware.mwbooking.entity.Package;
 
 import java.time.ZonedDateTime;
 import java.util.List;
@@ -36,21 +36,21 @@ public class PackageServiceImpl implements PackageService {
 
     @Override
     public PackageRegisterResponse registerPackage(PackageRegisterRequest packageRegisterRequest) {
-        Package package_e = Package.builder()
+        Package_ package_e = Package_.builder()
                             .packageName(packageRegisterRequest.packageName())
                             .totalCredits(packageRegisterRequest.totalCredits())
                             .price(packageRegisterRequest.price())
                             .expiryDays(packageRegisterRequest.expiryDays())
                             .country(packageRegisterRequest.country())
                             .build();
-        Package savedPackage = packageCacheService.save(package_e);
+        Package_ savedPackage = packageCacheService.save(package_e);
         return PackageRegisterResponse.from(savedPackage);
     }
 
     @Override
     public List<PackageResponse> getAvailablePackagesByCountry(String country) {
-        List<Package> packages = packageCacheService.findAllByCountry(country);
-        return packages.stream()
+        List<Package_> aPackages = packageCacheService.findAllByCountry(country);
+        return aPackages.stream()
                 .map(PackageResponse::from)
                 .toList();
     }
@@ -60,11 +60,11 @@ public class PackageServiceImpl implements PackageService {
         User user = userCacheService.getUser();
 
         //Retrieve package by ID and check if it exists
-        Package selectedPackage = packageCacheService.findById(purchasePackageRequest.packageId());
+        Package_ selectedPackage = packageCacheService.findById(purchasePackageRequest.packageId());
 
         //Validate package country against user's country
         if (!selectedPackage.getCountry().equals(user.getCountry())) {
-            throw new IllegalArgumentException("Package is not available for the user's country.");
+            throw new IllegalArgumentException("Package_ is not available for the user's country.");
         }
 
         //TODO: to refactor this db hit
