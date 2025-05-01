@@ -89,14 +89,13 @@ public class BookingServiceImpl implements BookingService {
 
     private Booking processBooking(User user, Class_ class_e) {
         try (BookingLockService.AutoLock lock = bookingLockService.lockForBooking(user.getUserId(), class_e.getClassId())) {
-
             List<UserPackage> userPackageList = userPackageCacheService.findUserPackagesByUserIdAndCountry(user.getUserId(), user.getCountry());
             validateSufficientCredits(class_e, userPackageList);
-
             return deductCredits(user, class_e, userPackageList);
-        } catch (Exception e) {
-            throw new BookingConcurrencyException("Failed to complete booking due to high demand. Please try again.");
+        } catch (BookingConcurrencyException | InterruptedException e) {
+            throw new BookingConcurrencyException("Failed to complete booking due to high demand. Please try again.", e);
         }
+        // Let all other exceptions (business logic, validation, etc.) propagate
     }
 
     @Override

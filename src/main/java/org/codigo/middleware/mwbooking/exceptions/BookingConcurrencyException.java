@@ -7,4 +7,8 @@ public class BookingConcurrencyException extends RuntimeException {
 	public BookingConcurrencyException(String message) {
 		super(message);
 	}
+
+	public BookingConcurrencyException(String message, Throwable cause) {
+		super(message, cause);
+	}
 }

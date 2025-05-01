@@ -64,7 +64,7 @@ public class PackageServiceImpl implements PackageService {
 
         //Validate package country against user's country
         if (!selectedPackage.getCountry().equals(user.getCountry())) {
-            throw new IllegalArgumentException("Package_ is not available for the user's country.");
+            throw new IllegalArgumentException("Package is not available for the user's country.");
         }
 
         //TODO: to refactor this db hit

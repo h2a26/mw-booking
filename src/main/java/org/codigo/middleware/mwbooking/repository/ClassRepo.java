@@ -10,6 +10,6 @@ import java.util.List;
 public interface ClassRepo extends JpaRepository<Class_, Long> {
     List<Class_> findAllByCountry(String country);
     default Class_ findByClassId(long id) {
-        return findById(id).orElseThrow(() -> new IllegalArgumentException("Class_ not found by id: " + id));
+        return findById(id).orElseThrow(() -> new IllegalArgumentException("Class not found by id: " + id));
     }
 }
