@@ -1,6 +1,6 @@
 package org.codigo.middleware.mwbooking.api.output.package_;
 
-import org.codigo.middleware.mwbooking.entity.Package;
+import org.codigo.middleware.mwbooking.entity.Package_;
 
 import java.math.BigDecimal;
 
@@ -11,7 +11,7 @@ public record PackageRegisterResponse(
         int expiryDays,
         String country
 ) {
-        public static PackageRegisterResponse from(Package package_e) {
+        public static PackageRegisterResponse from(Package_ package_e) {
                 return new PackageRegisterResponse(
                         package_e.getPackageName(),
                         package_e.getTotalCredits(),

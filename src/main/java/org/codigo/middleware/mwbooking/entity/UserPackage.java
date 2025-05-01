@@ -23,7 +23,7 @@ public class UserPackage extends AuditableEntity {
 
     @ManyToOne
     @JoinColumn(name = "package_id", nullable = false)
-    private Package packageEntity;
+    private Package_ packageEntity;
 
     private int remainingCredits;
 
