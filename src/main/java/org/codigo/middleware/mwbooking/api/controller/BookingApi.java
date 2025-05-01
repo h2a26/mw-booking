@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/booking")
+@RequestMapping("/bookings")
 public class BookingApi {
 
     private final BookingService bookingService;
@@ -25,12 +25,14 @@ public class BookingApi {
         this.bookingService = bookingService;
     }
 
-    @GetMapping("/confirmed-classes")
+    // ✅ Get confirmed bookings
+    @GetMapping
     public ResponseEntity<ApiResponse<List<BookingConfirmedClassesResponse>>> bookingConfirmedClasses() {
         List<BookingConfirmedClassesResponse> bookingConfirmed = bookingService.bookingConfirmedClasses();
         return ApiResponse.of(bookingConfirmed);
     }
 
+    // ✅ Create a new booking
     @PostMapping
     public ResponseEntity<ApiResponse<BookingResponse>> bookingClass(@Validated @RequestBody BookingClassRequest bookingClassRequest, BindingResult result) {
         return ApiResponse.of(bookingService.bookingClass(bookingClassRequest));

@@ -73,8 +73,10 @@ public class PackageServiceImpl implements PackageService {
 
 
     @Override
-    public List<UserPackageResponse> getPurchasedPackagesByUserIdAndCountry(Long userId) {
-        List<UserPackage> userPackageList = userPackageCacheService.findUserPackagesByUserId(userId);
+    public List<UserPackageResponse> getPurchasedPackagesByUserIdAndCountry() {
+        User user = userCacheService.getUser();
+
+        List<UserPackage> userPackageList = userPackageCacheService.findUserPackagesByUserId(user.getUserId());
         return userPackageList.stream()
                 .map(UserPackageResponse::from)
                 .collect(Collectors.toList());

@@ -9,5 +9,5 @@ public interface PackageService {
     PackageRegisterResponse registerPackage(PackageRegisterRequest packageRegisterRequest);
     List<PackageResponse> getAvailablePackagesByCountry(String country);
     PurchasePackageResponse purchasePackage(PurchasePackageRequest purchasePackageRequest);
-    List<UserPackageResponse> getPurchasedPackagesByUserIdAndCountry(Long userId);
+    List<UserPackageResponse> getPurchasedPackagesByUserIdAndCountry();
 }

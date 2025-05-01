@@ -1,5 +1,5 @@
 DROP TABLE IF EXISTS users, roles, permissions, user_roles, role_permissions, packages, user_packages, payments, business, classes, bookings, bookings_detail,
-refunds CASCADE;
+refunds, waitlists CASCADE;
 
 
 -- Users Table
@@ -203,3 +203,24 @@ CREATE TABLE IF NOT EXISTS refunds (
 -- Index for performance on refund queries
 CREATE INDEX IF NOT EXISTS idx_refunds_user_id ON refunds(user_id);
 CREATE INDEX IF NOT EXISTS idx_refunds_user_package_id ON refunds(user_package_id);
+
+
+-- Waitlists Table (Users who are waitlisted for a class)
+CREATE TABLE IF NOT EXISTS waitlists (
+    waitlist_id SERIAL PRIMARY KEY,
+    waitlist_position INT NOT NULL,
+    status VARCHAR(50) NOT NULL,
+    class_id INT NOT NULL REFERENCES classes(class_id) ON DELETE CASCADE,
+    user_id INT NOT NULL REFERENCES users(user_id) ON DELETE CASCADE,
+    created_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,
+    created_by VARCHAR(255) DEFAULT 'System',
+    updated_by VARCHAR(255) DEFAULT 'System',
+    version BIGINT DEFAULT 0 NOT NULL,
+    CONSTRAINT chk_waitlist_position CHECK (waitlist_position >= 0)
+    );
+
+-- Indexes for performance on waitlist queries
+CREATE INDEX IF NOT EXISTS idx_waitlists_waitlist_position ON waitlists(waitlist_position);
+CREATE INDEX IF NOT EXISTS idx_waitlists_user_id ON waitlists(user_id);
+CREATE INDEX IF NOT EXISTS idx_waitlists_class_id ON waitlists(class_id);

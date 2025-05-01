@@ -25,10 +25,11 @@ public class BookingServiceImpl implements BookingService {
     private final BookingLockService bookingLockService;
     private final UserPackageCacheService userPackageCacheService;
     private final ClassCacheService classCacheService;
-    private final WaitlistCacheService waitlistCacheService;
+    private final WaitListCacheService waitlistCacheService;
     private final RefundCacheService refundCacheService;
+    private final WaitListService waitlistService;
 
-    public BookingServiceImpl(UserCacheService userCacheService, BookingCacheService bookingCacheService, BookingDetailCacheService bookingDetailCacheService, BookingLockService bookingLockService, UserPackageCacheService userPackageCacheService, ClassCacheService classCacheService, WaitlistCacheService waitlistCacheService, RefundCacheService refundCacheService) {
+    public BookingServiceImpl(UserCacheService userCacheService, BookingCacheService bookingCacheService, BookingDetailCacheService bookingDetailCacheService, BookingLockService bookingLockService, UserPackageCacheService userPackageCacheService, ClassCacheService classCacheService, WaitListCacheService waitlistCacheService, RefundCacheService refundCacheService, WaitListService waitlistService) {
         this.userCacheService = userCacheService;
         this.bookingCacheService = bookingCacheService;
         this.bookingDetailCacheService = bookingDetailCacheService;
@@ -37,6 +38,7 @@ public class BookingServiceImpl implements BookingService {
         this.classCacheService = classCacheService;
         this.waitlistCacheService = waitlistCacheService;
         this.refundCacheService = refundCacheService;
+        this.waitlistService = waitlistService;
     }
 
 
@@ -145,29 +147,23 @@ public class BookingServiceImpl implements BookingService {
     private Booking doBooking(User user, Class_ classEntity, long packageId) {
         try (BookingLockService.AutoLock lock = bookingLockService.lockForBooking(user.getUserId(), classEntity.getClassId())) {
             if (classEntity.getAvailableSlots() == 0) {
-                return doAddWaitlist(user, classEntity);
+                return doAddWaitlist(user, classEntity, packageId);
             } else {
-                return doNormalBooking(user, classEntity, packageId);
+                return doNormalBooking(user, classEntity, packageId, BookingStatus.BOOKED);
             }
         } catch (BookingConcurrencyException | InterruptedException e) {
             throw new BookingConcurrencyException("Failed to complete booking due to high demand. Please try again.", e);
         }
     }
 
-    private Booking doAddWaitlist(User user, Class_ classEntity) {
-        waitlistCacheService.addToWaitlist(user, classEntity);
-        return Booking.builder()
-                .user(user)
-                .classEntity(classEntity)
-                .bookingTime(ZonedDateTime.now())
-                .status(BookingStatus.WAITLISTED)
-                .isCanceled(false)
-                .build();
+    private Booking doAddWaitlist(User user, Class_ classEntity, long packageId) {
+        waitlistService.addUserToWaitlist(user, classEntity);
+        return doNormalBooking(user, classEntity, packageId, BookingStatus.WAITLISTED);
     }
 
-    private Booking doNormalBooking(User user, Class_ classEntity, long packageId) {
+    private Booking doNormalBooking(User user, Class_ classEntity, long packageId, BookingStatus bookingStatus) {
         UserPackage userPackage = userPackageCacheService.findByUserPackageId(packageId);
-        classEntity.setAvailableSlots(classEntity.getAvailableSlots() - 1);
+        classEntity.setAvailableSlots(classEntity.getAvailableSlots() == 0 ? 0 : classEntity.getAvailableSlots() - 1);
         userPackage.setRemainingCredits(userPackage.getRemainingCredits() - classEntity.getRequiredCredits());
         userPackageCacheService.save(userPackage);
         classCacheService.save(classEntity);
@@ -175,7 +171,7 @@ public class BookingServiceImpl implements BookingService {
                 .user(user)
                 .classEntity(classEntity)
                 .bookingTime(ZonedDateTime.now())
-                .status(BookingStatus.BOOKED)
+                .status(bookingStatus)
                 .isCanceled(false)
                 .build();
         Booking savedBooking = bookingCacheService.save(booking);
@@ -252,9 +248,10 @@ public class BookingServiceImpl implements BookingService {
      */
     private void promoteWaitlistIfPossible(Class_ class_e) {
         while (class_e.getAvailableSlots() > 0) {
-            WaitlistEntry waitlistEntry = waitlistCacheService.getFromWaitlist(class_e.getClassId());
-            if (waitlistEntry == null) break;
-            User candidate = userCacheService.getUser(waitlistEntry.getEmail());
+            Long candidateUserId = waitlistService.getUserIdFromWaitlist(class_e); // with FIFO logic
+
+            if (candidateUserId == null) break;
+            User candidate = userCacheService.getUserById(candidateUserId);
             try {
                 // Find a valid package for the candidate
                 List<UserPackage> packages = userPackageCacheService.findUserPackagesByUserId(candidate.getUserId());
@@ -266,16 +263,6 @@ public class BookingServiceImpl implements BookingService {
                         .findFirst().orElse(null);
                 if (validPackage == null) {
                     log.info("No valid package found for waitlist user {} for class {}", candidate.getUserId(), class_e.getClassId());
-                    continue;
-                }
-                // Overlap check: skip if candidate has an overlapping booking
-                List<Booking> userBookings = bookingCacheService.findAllBookedBookingByUserId(candidate.getUserId());
-                boolean overlap = userBookings.stream().anyMatch(b ->
-                    isTimeOverlap(class_e.getClassStartDate(), class_e.getClassEndDate(),
-                                  b.getClassEntity().getClassStartDate(), b.getClassEntity().getClassEndDate())
-                );
-                if (overlap) {
-                    log.info("Waitlist user {} has overlapping booking for class {}. Skipping promotion.", candidate.getUserId(), class_e.getClassId());
                     continue;
                 }
                 processBooking(candidate, class_e, validPackage.getUserPackageId());

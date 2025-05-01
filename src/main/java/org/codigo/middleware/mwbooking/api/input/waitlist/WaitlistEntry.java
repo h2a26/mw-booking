@@ -11,5 +11,5 @@ import lombok.Setter;
 @NoArgsConstructor
 public class WaitlistEntry {
     private long classId;
-    private String email;
+    private long userId;
 }

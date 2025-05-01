@@ -40,9 +40,9 @@ public class PackageApi {
         return ApiResponse.of(purchasePackageResponse);
     }
 
-    @GetMapping("/purchased-packages")
-    public ResponseEntity<ApiResponse<List<UserPackageResponse>>> getUserPurchasedPackages(@RequestParam Long userId) {
-        List<UserPackageResponse> userPurchasedPackages = packageService.getPurchasedPackagesByUserIdAndCountry(userId);
+    @GetMapping("/me")
+    public ResponseEntity<ApiResponse<List<UserPackageResponse>>> getUserPurchasedPackages() {
+        List<UserPackageResponse> userPurchasedPackages = packageService.getPurchasedPackagesByUserIdAndCountry();
         return ApiResponse.of(userPurchasedPackages);
     }
 }

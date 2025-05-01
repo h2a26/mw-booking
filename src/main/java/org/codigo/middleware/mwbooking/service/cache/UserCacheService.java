@@ -32,7 +32,8 @@ public class UserCacheService {
         String email = SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString();
         return findByEmail(email);
     }
-    public User getUser(String email) {
-        return findByEmail(email);
+
+    public User getUserById(Long id) {
+        return userRepo.findById(id).orElseThrow(() -> new IllegalArgumentException("User not found by id: " + id));
     }
 }

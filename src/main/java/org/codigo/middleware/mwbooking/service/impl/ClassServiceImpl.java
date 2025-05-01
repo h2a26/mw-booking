@@ -87,6 +87,7 @@ public class ClassServiceImpl implements ClassService {
 
     private void processRefund(long classId) {
         List<Booking> waitlistedBookingList = bookingRepo.findAllByClassEntity_ClassIdAndStatus(classId, BookingStatus.WAITLISTED);
+        log.info("processRefund {}", waitlistedBookingList);
         waitlistedBookingList.forEach(this::refundCredit);
     }
 
